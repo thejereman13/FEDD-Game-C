@@ -1,0 +1,4 @@
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\bin\Debug\FEDDGame.exe.config
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.csprojResolveAssemblyReference.cache
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.Properties.Resources.resources
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.csproj.GenerateResource.Cache
