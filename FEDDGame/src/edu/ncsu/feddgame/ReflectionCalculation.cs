@@ -1,22 +1,13 @@
-package edu.ncsu.feddgame;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joml.Vector2d;
-
-import edu.ncsu.feddgame.gui.UIElement;
-import edu.ncsu.feddgame.gui.UIUtils;
-import edu.ncsu.feddgame.render.CreateModel;
-import edu.ncsu.feddgame.render.LaserModel;
-import edu.ncsu.feddgame.render.LaserStop;
-import edu.ncsu.feddgame.render.Model;
+using OpenTK;
+using System;
+using System.Collections.Generic;
 
 public class ReflectionCalculation {
 
-	private static ArrayList<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
-	private static float coords[];
-	private static Object[] closest;
+	private static List<object[]> intersects = new List<object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
+	private static float[] coords;
+	private static object[] closest;
 
 	/**
 	 * Calculates the path of travel of the laser and sets the laser to such a
@@ -25,12 +16,12 @@ public class ReflectionCalculation {
 	 * @param laser
 	 * @param models
 	 */
-	static Object[] reflect(LaserModel laser) {
+	public static object[] reflect(LaserModel laser) {
 		findIntersects(laser, GameInstance.objectManager.getModels());
 		
 		// If there exists at least one valid intersection
 		
-		if (!intersects.isEmpty()) { 
+		if (intersects.Count != 0) { 
 			closest = getClosestIntersection(); // Find the closest one
 			
 			// Pythagorean theorem to find length of vector
@@ -61,11 +52,11 @@ public class ReflectionCalculation {
 	private static Vector2d reflectionVector(Vector2d incidence, Vector2d surface) {
 		Vector2d resultant = new Vector2d();
 		Vector2d normal;
-		
+		/*
 		// Check for vertical sides of blocks, because JOML is stupid about infinite slopes
-		if (surface.y == Double.NEGATIVE_INFINITY) {
+		if (surface.Y == double.NegativeInfinity) {
 			normal = new Vector2d(1, 0);
-		} else if (surface.y == Double.POSITIVE_INFINITY) {
+		} else if (surface.Y == double.PositiveInfinity) {
 			normal = new Vector2d(-1, 0);
 		} else {
 			// Normalize a perpendicular vector otherwise
@@ -77,6 +68,8 @@ public class ReflectionCalculation {
 		incidence.sub(normal, resultant);
 
 		return resultant;
+		*/
+		return surface;
 	}
 	
 	
@@ -86,9 +79,9 @@ public class ReflectionCalculation {
 	static float yIntercept;
 	
 	private static void findIntersects(LaserModel laser, List<Model> models) {
-		intersects.clear(); // Remove existing intersects from the list
-		intersects.trimToSize();
-		float slope = (float) Math.tan(laser.getAngle());
+		intersects.Clear(); // Remove existing intersects from the list
+		intersects.TrimExcess();
+		float slope = (float) Math.Tan(laser.getAngle());
 		coords = laser.getCoords();
 		int xDir = laser.xDir;
 		int yDir = laser.yDir;
@@ -99,18 +92,18 @@ public class ReflectionCalculation {
 		}
 		
 		// For all Models in the scene
-		for (Model m : models) {
+		foreach (Model m in models) {
 			// Don't intersect with lasers or UI Elements
-			if (!(m instanceof LaserModel) && !(m instanceof UIElement)) { 
+			if (!(m is LaserModel) && !(m is UIElement)) { 
 				for (int side = 0; side < m.sideCount; side++) {
 					v = getY1X1(m, side);
 					sl = getSlope(v);
 					
 					// If the laser is vertical
-					if (slope == Float.POSITIVE_INFINITY || slope == Float.NEGATIVE_INFINITY) {
+					if (slope == float.PositiveInfinity || slope == float.NegativeInfinity) {
 						
 						// If both are vertical
-						if (sl == Float.POSITIVE_INFINITY || sl == Float.NEGATIVE_INFINITY) {
+						if (sl == float.PositiveInfinity || sl == float.NegativeInfinity) {
 							xIntercept = 100f; // They will never intercept
 							yIntercept = 100f;
 						} else {
@@ -118,7 +111,7 @@ public class ReflectionCalculation {
 							yIntercept = sl * (coords[0] - v[0]) + v[1];
 							xIntercept = coords[0];
 						}
-					} else if (sl < Float.POSITIVE_INFINITY && sl > Float.NEGATIVE_INFINITY) {
+					} else if (sl < float.PositiveInfinity && sl > float.NegativeInfinity) {
 						// Make sure the line isn't vertical if unsure
 						
 						// Calculate intersection points of the two lines
@@ -140,7 +133,7 @@ public class ReflectionCalculation {
 							//TODO: Check if this works for all polygons (it might, not sure)
 							if (((yIntercept <= v[1]) && (yIntercept >= v[3]))
 									|| ((yIntercept >= v[1]) && (yIntercept <= v[3]))) {
-								intersects.add(new Object[] { m, xIntercept, yIntercept, sl });
+								intersects.Add(new object[] { m, xIntercept, yIntercept, sl });
 							}
 						}
 					}
@@ -156,19 +149,19 @@ public class ReflectionCalculation {
 	 * 
 	 * @return
 	 */
-	private static Object[] getClosestIntersection() {
+	private static object[] getClosestIntersection() {
 		// Start with a massive value
-		closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
+		closest = new Object[] { null, float.MaxValue / 2f, float.MaxValue / 2f, 0f };
 		length = 0;
 		midpoint = new float[2];
 		
-		ArrayList<Object[]> inters = new ArrayList<Object[]>();
-		inters.addAll(intersects);
+		List<Object[]> inters = new List<Object[]>();
+		inters.AddRange(intersects);
 		
 		// For all intersecting points
-		for (Object[] b : intersects) {
+		foreach (object[] b in intersects) {
 			try {
-				length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
+				length = (float) Math.Hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
 				// If the new object is closer than the old one
 				if ((Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Math
 						.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
@@ -176,9 +169,9 @@ public class ReflectionCalculation {
 					midpoint[1] = ((float)b[2]+coords[1]) /2f;
 					// Ensure that the new intersection point isn't at the exact same spot
 					if (length > 0.05f) {
-						boolean inside = false;
+						bool inside = false;
 						
-						for (Model m : GameInstance.objectManager.getModels()) {
+						foreach (Model m in GameInstance.objectManager.getModels()) {
 							if (UIUtils.checkIntersection(m.vertices, midpoint[0], midpoint[1])) {
 								inside = true;
 							}
@@ -206,8 +199,8 @@ public class ReflectionCalculation {
 		if (side == 0) {
 			// If the first side, use last vertex and first
 			return new float[] {
-					mod.vertices[mod.vertices.length - 3],
-					mod.vertices[mod.vertices.length - 2],
+					mod.vertices[mod.vertices.Length - 3],
+					mod.vertices[mod.vertices.Length - 2],
 					mod.vertices[0], mod.vertices[1]
 			};
 		} else if (side > 0) {
@@ -235,7 +228,7 @@ public class ReflectionCalculation {
 	 * @param l
 	 */
 	private static void reflectionCallback(Model m, LaserModel l) {
-		if (m instanceof LaserStop) {
+		if (m is LaserStop) {
 			((LaserStop) m).laserIntersection();
 		}
 	}

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using OpenTK.Graphics.OpenGL;
 
 public class Window {
 
@@ -14,7 +15,7 @@ public class Window {
 	private string title;
 	public static bool isClicked = false;
 	public static bool ctrlHeld = false;
-	private GLFWVidMode vidMode;
+	//private GLFWVidMode vidMode;
 	private Text times;
 	
 	private List<UIElement> elementList = new List<UIElement>();
@@ -29,7 +30,7 @@ public class Window {
 	 * @param title
 	 * @param fullscreen
 	 */
-	Window (int width, int height, string title, bool fullscreen) {
+	public Window (int width, int height, string title, bool fullscreen) {
 		this.width = width;
 		this.height = height;
 		this.ratio = (float) width / (float) height;
@@ -43,18 +44,18 @@ public class Window {
 	 * of the local variables.
 	 */
 	private void createWindow() {
+		/*
 		long monitor = glfwGetPrimaryMonitor();
 		window = glfwCreateWindow(width, height, title, fullscreen ? monitor : 0, 0);
-		/*
+
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window.");
-		*/
 		vidMode = glfwGetVideoMode(monitor);
 		refreshRate = vidMode.refreshRate();
 		
 		glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 		glfwShowWindow(window);
-		
+
 		setWindowIcon();
 		setKeyCallback();
 		setWindowSizeCallback();
@@ -62,53 +63,55 @@ public class Window {
 		setMousePosCallback();
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
+		*/
 	}
 	
 	/**
 	 * Adds all specified elements to the Window's array and scene
 	 */
-	void AddElements() {
+	public void addElements() {
 		//Add items here that need to be rendered every frame on all screens
 		if (GameInstance.getCurrentLevel() is Level && GameInstance.showTimer){
-			times = new Text(10.25f, -2f, "Time: ", GameColor.TEAL.getFloatColor(), 1);
+			times = new Text(10.25f, -2f, "Time: ", GameColor.TEAL, 1);
 			elementList.Add(times);
 		}
 		if (GameInstance.getCurrentLevel() is Level)
-			elementList.Add(new Text(10.2f, -1.5f, GameInstance.getCurrentLevel().getName(), GameColor.YELLOW.getFloatColor(), 1.4f));
+			elementList.Add(new Text(10.2f, -1.5f, GameInstance.getCurrentLevel().getName(), GameColor.YELLOW, 1.4f));
 	}
 	public void updateTime(){
 		if (GameInstance.getCurrentLevel() is Level)
 			times.setLabelstring("Time: " + (int)((Level)GameInstance.getCurrentLevel()).getElapsedTime());
 	}
 	
-	void clearElements() {
+	public void clearElements() {
 		elementList.Clear();
 		elementList.TrimExcess();
 	}
 	
-	void centerWindow() {
-		glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
+	public void centerWindow() {
+		//glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 	}
 	
 	/**
 	 * @return close flag of the window
 	 */
-	bool shouldClose() {
-		return glfwWindowShouldClose(window);
+	public bool shouldClose() {
+		return false;
+		//return glfwWindowShouldClose(window);
 	}
 	
 	/**
 	 * Swaps the front and back buffers of the window
 	 */
-	void swapBuffers() {
-		glfwSwapBuffers(window);
+	public void swapBuffers() {
+		//glfwSwapBuffers(window);
 	}
 	
 	/**
 	 * Sets the error callback for the game
 	 */
 	public static void setCallbacks() {
-		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
+		//glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
 	}
 
 	/**
@@ -116,8 +119,9 @@ public class Window {
 	 * when glfwPollEvents is called
 	 */
 	private void setKeyCallback() {
+		/*
 		// Set key listener
-		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+		glfwSetKeyCallback(window, (window, key, scancode, action, mods) => {
 			// On Escape, set the window to close
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
 				glfwSetWindowShouldClose(window, true);
@@ -141,7 +145,6 @@ public class Window {
 				}
 			}
 			
-			/*
 			if (key == GLFW_KEY_LEFT_SHIFT) {
 				if (action == GLFW_PRESS) {
 					shiftHeld = true;
@@ -149,7 +152,6 @@ public class Window {
 					shiftHeld = false;
 				}
 			}
-			*/
 			if (GameInstance.demoMode)
 				if (key == GLFW_KEY_LEFT_ALT && action == GLFW_RELEASE) {
 					if (GameInstance.levNum != GameInstance.scenes.size() - 2) {
@@ -167,18 +169,17 @@ public class Window {
 				}
 			}	
 		});
+		*/
 	}
 	
 	/**
 	 * Sets the size callback for the window
 	 */
-	private void setWindowSizeCallback() {
-		glfwSetWindowSizeCallback(window, (window, width, height) => { 	//Resize listener
-			glViewport(0,0,width, height); 	//Reset the viewport to the correct size
+	private void setWindowSizeCallback(int width, int height) { 	//Resize listener
+			GL.Viewport(0,0,width, height); 	//Reset the viewport to the correct size
 			this.width = width;
 			this.height = height;
 			this.ratio = (float)width / (float)height;
-		});
 	}
 	
 	/**
@@ -186,6 +187,7 @@ public class Window {
 	 * when glfwPollEvents is called
 	 */
 	private void setMouseButtonCallback() {
+		/*
 		// Mouse click listener
 		glfwSetMouseButtonCallback(window, (window, button, action, mods) => {
 			if (button == GLFW_MOUSE_BUTTON_LEFT) { 	//If left mouse button
@@ -219,7 +221,7 @@ public class Window {
 						}
 					}
 					
-					for (UIElement e : elementList) {
+					foreach (UIElement e in elementList) {
 						if (e is IClickable) {
 							((IClickable) e).checkClick(mouseX, mouseY);
 						}
@@ -229,14 +231,13 @@ public class Window {
 				}
 			}
 		});
+		*/
 	}
 	
-	private void setMousePosCallback() {
-		glfwSetCursorPosCallback(window, (window, xPos, yPos) => {
+	private void MousePosCallback(float xPos, float yPos) {
 			float[] newC = UIUtils.convertToWorldspace((float)xPos, (float)yPos, this.width, this.height);
 			this.mouseX = newC[0];
 			this.mouseY = newC[1];
-		});
 	}
 	
 	/**
@@ -263,14 +264,14 @@ public class Window {
 	/**
 	 * Updates input array and polls GLFW events
 	 */
-	void update() {
-		glfwPollEvents();
+	public void update() {
+		//glfwPollEvents();
 	}
 	
 	/**
 	 * Renders all UI elements in elementList
 	 */
-	void renderElements() {
+	public void renderElements() {
 		foreach (UIElement e in elementList)
 			e.render();
 	}
@@ -279,6 +280,7 @@ public class Window {
 	 * Sets the taskbar and window icon for the game
 	 */
 	private void setWindowIcon() {
+		/*
 		GLFWImage image = GLFWImage.malloc();
 		image.set(32, 32, loadIcon("/icon.png"));
 		GLFWImage.Buffer images = GLFWImage.malloc(1);
@@ -288,12 +290,14 @@ public class Window {
 
 		images.free();
 		image.free();
+		*/
 	}
 	
 	/**
 	 * @param path
 	 * @return PNG image as a ByteBuffer
 	 */
+	 /*
 	private ByteBuffer loadIcon(string path) {
 		PNGDecoder dec = null;
 		ByteBuffer buf = null;
@@ -311,5 +315,6 @@ public class Window {
 		
 		return buf;
     }
+	*/
 	
 }

@@ -25,7 +25,7 @@ public class SaveGame {
 	};
 	
 	// Read from the file, generate a new one with defaults if such a file doesn't exist
-	public static SaveData() {
+	static SaveGame() {
 		try {
 			using(StreamReader input = new StreamReader("saveGame.fd")) {
 			}

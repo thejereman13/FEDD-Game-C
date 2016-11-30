@@ -51,8 +51,12 @@
     <StartupObject>FEDDGame.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>packages\Str1ker.OpenTK.1.1.2253.0\lib\net20\OpenTK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>packages\Str1ker.OpenTK.GLControl.1.1.2253.1\lib\net20\OpenTK.GLControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -103,7 +107,6 @@
     <Compile Include="src\edu\ncsu\feddgame\level\Menu.cs" />
     <Compile Include="src\edu\ncsu\feddgame\level\OptionsMenu.cs" />
     <Compile Include="src\edu\ncsu\feddgame\level\Scene.cs" />
-    <Compile Include="src\edu\ncsu\feddgame\ModLoader.cs" />
     <Compile Include="src\edu\ncsu\feddgame\ObjectManager.cs" />
     <Compile Include="src\edu\ncsu\feddgame\ReflectionCalculation.cs" />
     <Compile Include="src\edu\ncsu\feddgame\render\Alignment.cs" />
@@ -125,6 +128,9 @@
     <Compile Include="src\edu\ncsu\feddgame\SaveGame.cs" />
     <Compile Include="src\edu\ncsu\feddgame\State.cs" />
     <Compile Include="src\edu\ncsu\feddgame\Window.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

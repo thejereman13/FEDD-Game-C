@@ -13,7 +13,7 @@ public class LaserWrapper {
 	 * @param init
 	 */
 	public LaserWrapper(LaserModel init) {
-		laserList.add(init);
+		laserList.AddLast(init);
 		root = init;
 	}
 	
@@ -21,9 +21,9 @@ public class LaserWrapper {
 	 * Runs recursively the reflection calculations on the last laser in the list
 	 */
 	private void calculateReflections() {
-		newL = ReflectionCalculation.reflect(laserList.getLast()); // Reflect the last laser in the list
-		if (newL != null && (!(newL[1] instanceof Wall) && !(newL[1] instanceof LaserStop) && !(newL[1] instanceof LaserStart)) && laserList.size() < 20){ 	//if the returned reflection is neither null nor off a wall
-			laserList.add((LaserModel)newL[0]); // Add the new laser
+		newL = ReflectionCalculation.reflect(laserList.Last.Value); // Reflect the last laser in the list
+		if (newL != null && (!(newL[1] is Wall) && !(newL[1] is LaserStop) && !(newL[1] is LaserStart)) && laserList.Count < 20){ 	//if the returned reflection is neither null nor off a wall
+			laserList.AddLast((LaserModel)newL[0]); // Add the new laser
 			calculateReflections(); // Reflect again with that new one
 		}
 	}
@@ -33,8 +33,8 @@ public class LaserWrapper {
 	public void runReflections() {
 		lock.writeLock().lock(); // Lock access to the list
 		
-		laserList.clear(); // Clear and restart the list
-		laserList.add(root);
+		laserList.Clear(); // Clear and restart the list
+		laserList.AddLast(root);
 		calculateReflections(); // Run reflections
 		
 		lock.writeLock().unlock(); // Unlock access
@@ -47,7 +47,7 @@ public class LaserWrapper {
 		lock.readLock().lock(); // Locks access to the list
 		
 		// Renders all lasers in the list
-		for (LaserModel m : laserList){
+		foreach (LaserModel m in laserList){
 			m.render();
 		}
 		lock.readLock().unlock(); // Unlocks the list

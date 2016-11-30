@@ -63,7 +63,7 @@ public class GameInstance {
 		SaveGame.readData();
 		new ModLoader();
 		objectManager = new ObjectManager();
-		
+		/*
 		// If glfw fails to initialize, throw exception 
 		if (!glfwInit())
 			throw new IllegalStateException("Cannot initialize GLFW");
@@ -72,33 +72,32 @@ public class GameInstance {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		glfwWindowHint(GLFW_SAMPLES, 4);
 		glfwWindowHint(GLFW_STENCIL_BITS, 4);
-		
+		*/
 		window = new Window(800, 800, "Laser Amazer", false);
 		
 		if (demoMode)
-			scenes.add(new DemoLevel());
-		scenes.add(new GameComplete());
+			scenes.Add(new DemoLevel());
+		scenes.Add(new GameComplete());
 	}
 	
 	/**
 	 * Game render loop
 	 */
 	private void renderLoop() {
-		GL.createCapabilities();
 		//TODO Should probably throw exception and exit here if window is null
 		
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		GL.Enable(EnableCap.Texture2D);
+		GL.Enable(EnableCap.Blend);
+		GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 		
-		FloatColor clearColor = new FloatColor(GameColor.DARK_GREY.getColor());
-		glClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1f);
+		FloatColor clearColor = GameColor.DARK_GREY;
+		GL.ClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1f);
 
 		// Set up main menu text
-		GameFont menuItem = new GameFont("Start Game", new FloatColor(GameColor.ORANGE.getColor()));
-		GameFont startGame = new GameFont("Press Space to Start Game", new FloatColor(GameColor.YELLOW.getColor()));
-		
-		Matrix4d scale = new Matrix4d().translate(new Vector3f(100, 0, 0)).scale(40);
+		GameFont menuItem = new GameFont("Start Game", GameColor.ORANGE);
+		GameFont startGame = new GameFont("Press Space to Start Game", GameColor.YELLOW);
+
+		Matrix4d scale = Matrix4d.CreateTranslation(new Vector3d(100, 0, 0));	//Might still need a scale() method
 		Matrix4d target = new Matrix4d();
 		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
@@ -120,7 +119,7 @@ public class GameInstance {
 			
 		new Thread(() => logicLoop()).Start(); // Run the logic in a separate thread
 		
-		glfwSetWindowSize(window.window, 1200, 800);
+		//glfwSetWindowSize(window.window, 1200, 800);
 		window.centerWindow(); // Center window on screen
 		// Poll window while window isn't about to close
 		while (!window.shouldClose()) {
@@ -150,9 +149,9 @@ public class GameInstance {
 			// Render when scene changes
 			if (canRender) {
 				renderLevel();
-				glClear(GL_COLOR_BUFFER_BIT);
+				GL.Clear(ClearBufferMask.ColorBufferBit);
 				
-				if (state.equals(State.GAME)) {
+				if (state.Equals(State.GAME)) {
 					gameState = true;
 					shader.bind();
 					shader.updateUniforms(camera, target);
@@ -160,7 +159,7 @@ public class GameInstance {
 					window.updateTime();
 					window.renderElements();
 					getCurrentLevel().renderLoop();
-				} else if (state.equals(State.LEVEL_COMPLETE)) {
+				} else if (state.Equals(State.LEVEL_COMPLETE)) {
 					getCurrentLevel().setActive(false); // Set level as inactive
 					
 					// If user has the level complete dialogue enabled
@@ -175,11 +174,11 @@ public class GameInstance {
 						
 						// Add dark rectangle to make text more readable
 						shader.unbind();
-						glEnable(GL_BLEND);
-						glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-						
-						glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
-						glRectf(-10f, -10f, 10f, 10f);
+						GL.Enable(EnableCap.Blend);
+						GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+						GL.Color4(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
+						GL.Rect(-10f, -10f, 10f, 10f);
 						
 						Scene latestLevel = getCurrentLevel();
 						
@@ -189,22 +188,22 @@ public class GameInstance {
 					} else {
 						setState(State.NEXT_LEVEL);
 					}
-				} else if (state.equals(State.NEXT_LEVEL)) {
+				} else if (state.Equals(State.NEXT_LEVEL)) {
 					gameState = false;
 					nextLevel();
 					setState(State.GAME);
 				}
 				
-				if (!state.equals(State.LEVEL_COMPLETE)) {
+				if (!state.Equals(State.LEVEL_COMPLETE)) {
 					// Fading
 					shader.unbind();
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					GL.Enable(EnableCap.Blend);
+					GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 					
-					if (fade > 0) {
-						fade -= 2.5f;
-						glColor4f(clearColor.red(), clearColor.blue(), clearColor.green(), (float) Math.sin(Math.toRadians(fade)));
-						glRectf(-10f, -10f, 10f, 10f);
+					if (fadeN > 0) {
+						fadeN -= 2.5f;
+						GL.Color4(clearColor.red(), clearColor.blue(), clearColor.green(), (float) Math.Sin(fadeN));
+						GL.Rect(-10f, -10f, 10f, 10f);
 					}
 				}
 

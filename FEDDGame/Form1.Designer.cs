@@ -28,12 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+			this.glControl1 = new OpenTK.GLControl();
+			this.SuspendLayout();
+			// 
+			// glControl1
+			// 
+			this.glControl1.AutoSize = true;
+			this.glControl1.BackColor = System.Drawing.Color.Black;
+			this.glControl1.Location = new System.Drawing.Point(12, 12);
+			this.glControl1.Name = "glControl1";
+			this.glControl1.Size = new System.Drawing.Size(260, 237);
+			this.glControl1.TabIndex = 0;
+			this.glControl1.VSync = false;
+			this.glControl1.Load += new System.EventHandler(this.glControl1_Load);
+			this.glControl1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.glControl1_KeyPress);
+			// 
+			// Form1
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(284, 261);
+			this.Controls.Add(this.glControl1);
+			this.Name = "Form1";
+			this.Text = "Form1";
+			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+			this.ResumeLayout(false);
+			this.PerformLayout();
+
         }
 
-        #endregion
-    }
+		#endregion
+
+		private OpenTK.GLControl glControl1;
+	}
 }
 

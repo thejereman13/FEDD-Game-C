@@ -1,37 +1,7 @@
-package edu.ncsu.feddgame.render;
-
-import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
-import static org.lwjgl.opengl.GL20.GL_VALIDATE_STATUS;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
-import static org.lwjgl.opengl.GL20.glAttachShader;
-import static org.lwjgl.opengl.GL20.glBindAttribLocation;
-import static org.lwjgl.opengl.GL20.glCompileShader;
-import static org.lwjgl.opengl.GL20.glCreateProgram;
-import static org.lwjgl.opengl.GL20.glCreateShader;
-import static org.lwjgl.opengl.GL20.glDeleteProgram;
-import static org.lwjgl.opengl.GL20.glDeleteShader;
-import static org.lwjgl.opengl.GL20.glDetachShader;
-import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
-import static org.lwjgl.opengl.GL20.glGetProgrami;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
-import static org.lwjgl.opengl.GL20.glGetShaderi;
-import static org.lwjgl.opengl.GL20.glGetUniformLocation;
-import static org.lwjgl.opengl.GL20.glLinkProgram;
-import static org.lwjgl.opengl.GL20.glShaderSource;
-import static org.lwjgl.opengl.GL20.glUniform1i;
-import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
-import static org.lwjgl.opengl.GL20.glUseProgram;
-import static org.lwjgl.opengl.GL20.glValidateProgram;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.FloatBuffer;
-
-import org.joml.Matrix4f;
-import org.lwjgl.BufferUtils;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using System;
+using System.IO;
 
 public class Shader {
 
@@ -42,35 +12,38 @@ public class Shader {
 	 * @param path
 	 */
 	public Shader(string path) {
-		program = glCreateProgram();
+		program = GL.CreateProgram();
 		
 		// Vertex shader
-		vs = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vs, readFile(path + ".vs"));
-		glCompileShader(vs);
+		vs = GL.CreateShader(ShaderType.VertexShader);
+		GL.ShaderSource(vs, readFile(path + ".vs"));
+		GL.CompileShader(vs);
 		
+		/*
 		if (glGetShaderi(vs, GL_COMPILE_STATUS) != 1) {
 			System.err.println(glGetShaderInfoLog(vs)); // Print shader error
 			System.exit(1);
 		}
+		*/
 		
 		// Fragment shader
-		fs = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fs, readFile(path + ".fs"));
-		glCompileShader(fs);
+		fs = GL.CreateShader(ShaderType.FragmentShader);
+		GL.ShaderSource(fs, readFile(path + ".fs"));
+		GL.CompileShader(fs);
 		
-		// Check for shader error
+		/* Check for shader error
 		if (glGetShaderi(fs, GL_COMPILE_STATUS) != 1) {
 			System.err.println(glGetShaderInfoLog(fs)); // Print shader error
 			System.exit(1);
-		}
+		}*/
 		
-		glAttachShader(program, vs);
-		glAttachShader(program, fs);
+		GL.AttachShader(program, vs);
+		GL.AttachShader(program, fs);
 		
-		glBindAttribLocation(program, 0, "vertices");
-		glBindAttribLocation(program, 1, "textures");
-		
+		GL.BindAttribLocation(program, 0, "vertices");
+		GL.BindAttribLocation(program, 1, "textures");
+
+		/*
 		glLinkProgram(program);
 		// Check for link error
 		if (glGetProgrami(program, GL_LINK_STATUS) != 1) {
@@ -84,29 +57,29 @@ public class Shader {
 			System.err.println(glGetProgramInfoLog(program));
 			System.exit(1);
 		}
+		*/
 	}
 	
-	protected void finalize() throws Throwable {
-		glDetachShader(program, vs);
-		glDetachShader(program, fs);
-		glDeleteShader(vs);
-		glDeleteShader(fs);
-		glDeleteProgram(program);
-		super.finalize();
+	protected void finalize(){
+		GL.DetachShader(program, vs);
+		GL.DetachShader(program, fs);
+		GL.DeleteShader(vs);
+		GL.DeleteShader(fs);
+		GL.DeleteProgram(program);
 	}
 	
 	/**
 	 * Installs the program object as part of current rendering state
 	 */
 	public void bind() {
-		glUseProgram(program);
+		GL.UseProgram(program);
 	}
 	
 	/**
 	 * Removes/resets the program object
 	 */
 	public void unbind() {
-		glUseProgram(0);
+		GL.UseProgram(0);
 	}
 	
 	/**
@@ -114,30 +87,20 @@ public class Shader {
 	 * @param path
 	 * @return String with the contents of the shader file
 	 */
-	private String readFile(String path) {
-		StringBuilder sb = new StringBuilder();
-		BufferedReader reader;
-		
+	private string readFile(string path) {
 		try {
-			reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/shaders/" + path), "UTF-8"));
-			String line;
-			
-			while ((line = reader.readLine()) != null) {
-				sb.append(line);
-				sb.append("\n");
+			using(StreamReader input = new StreamReader("/res/shaders/shader")) {
+				return input.ReadToEnd();
 			}
-			
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 		
-		return sb.toString();
+		return null;
 	}
 	
-	public void updateUniforms(Camera camera, Matrix4f target) {
+	public void updateUniforms(Camera camera, Matrix4d target) {
 		setUniform("sampler", 0);
-		setUniform("projection", camera.getProjection().mul(target));
+		setUniform("projection", camera.getProjection() * target);
 	}
 	
 	/**
@@ -145,11 +108,11 @@ public class Shader {
 	 * @param name
 	 * @param value
 	 */
-	private void setUniform(String name, int value) {
-		int location = glGetUniformLocation(program, name);
+	private void setUniform(string name, int value) {
+		int location = GL.GetUniformLocation(program, name);
 		
 		if (location != -1)
-			glUniform1i(location, value);
+			GL.Uniform1(location, value);
 	}
 	
 	/**
@@ -157,14 +120,11 @@ public class Shader {
 	 * @param name
 	 * @param matrix
 	 */
-	private void setUniform(String name, Matrix4f matrix) {
-		int location = glGetUniformLocation(program, name);
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
-		
-		matrix.get(buffer);
+	private void setUniform(string name, Matrix4d matrix) {
+		int location = GL.GetUniformLocation(program, name);
 		
 		if (location != -1)
-			glUniformMatrix4fv(location, false, buffer);
+			GL.UniformMatrix4(location, false, ref matrix);
 	}
 	
 }
