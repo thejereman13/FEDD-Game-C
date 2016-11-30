@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 using LaserAmazer.Gui;
-using LaserAmazer.Level;
 using LaserAmazer.Render;
 
 namespace LaserAmazer
@@ -9,7 +8,6 @@ namespace LaserAmazer
     public class Window
     {
 
-        long window;
         private float mouseX, mouseY;
         public float ratio;
         public int refreshRate, width, height;
@@ -18,7 +16,6 @@ namespace LaserAmazer
         private string title;
         public static bool isClicked = false;
         public static bool ctrlHeld = false;
-        //private GLFWVidMode vidMode;
         private Text times;
 
         private List<UIElement> elementList = new List<UIElement>();

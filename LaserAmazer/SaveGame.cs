@@ -34,7 +34,7 @@ namespace LaserAmazer
                 {
                 }
             }
-            catch (Exception e)
+            catch
             {
                 try
                 {
@@ -47,7 +47,9 @@ namespace LaserAmazer
                         }
                     }
                 }
-                catch (Exception e1) { }
+                catch
+                {
+                }
             }
             values = new object[] {
             true,
@@ -104,7 +106,9 @@ namespace LaserAmazer
                     }
                 }
             }
-            catch (IOException e1) { }
+            catch
+            {
+            }
         }
     }
 }

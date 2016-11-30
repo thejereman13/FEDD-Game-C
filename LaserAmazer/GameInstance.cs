@@ -111,7 +111,7 @@ namespace LaserAmazer
             Matrix4d target = new Matrix4d();
 
             Camera camera = new Camera(window.GetWidth(), window.GetHeight());
-            camera.setPosition(new Vector3d(-100, 0, 0));
+            camera.SetPosition(new Vector3d(-100, 0, 0));
 
             shader = new Shader("shader");
 
@@ -256,7 +256,7 @@ namespace LaserAmazer
                     {
                         Thread.Sleep((int)sleeptime);
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
                 }

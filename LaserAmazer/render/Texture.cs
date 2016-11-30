@@ -1,8 +1,10 @@
 using OpenTK.Graphics.ES11;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace LaserAmazer.Render
 {
@@ -21,12 +23,15 @@ namespace LaserAmazer.Render
 
             try
             {
-                Image image = Image.FromStream(assembly.GetManifestResourceStream("/textures/" + path));
+                Bitmap image = Bitmap.FromStream(assembly.GetManifestResourceStream("/textures/" + path));
                 width = image.Width;
                 height = image.Height;
 
                 int[] pixelsRaw = new int[width * height * 4];
-                pixelsRaw = image.getRGB(0, 0, width, height, null, 0, width);
+                ImageConverter converter = new ImageConverter();
+                pixelsRaw = (int[])converter.ConvertTo(image, typeof(int[]));
+
+                pixelsRaw = getRGB(image, 0, 0, width, height, null, 0, width);
 
                 ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
 
@@ -70,7 +75,7 @@ namespace LaserAmazer.Render
         {
             if (sampler >= 0 && sampler <= 31)
             {
-                GL.ActiveTexture(GL_TEXTURE0 + sampler);
+                GL.ActiveTexture(TextureUnit.Texture0 + sampler);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
             }
         }
@@ -82,6 +87,45 @@ namespace LaserAmazer.Render
         {
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
+
+        public static void getRGB(this Bitmap image, int startX, int startY, int w, int h, int[] rgbArray, int offset, int scansize)
+        {
+            const int PixelWidth = 3;
+            const PixelFormat PixelFormat = PixelFormat.Format24bppRgb;
+
+            // En garde!
+            if (image == null) throw new ArgumentNullException("image");
+            if (rgbArray == null) throw new ArgumentNullException("rgbArray");
+            if (startX < 0 || startX + w > image.Width) throw new ArgumentOutOfRangeException("startX");
+            if (startY < 0 || startY + h > image.Height) throw new ArgumentOutOfRangeException("startY");
+            if (w < 0 || w > scansize || w > image.Width) throw new ArgumentOutOfRangeException("w");
+            if (h < 0 || (rgbArray.Length < offset + h * scansize) || h > image.Height) throw new ArgumentOutOfRangeException("h");
+
+            BitmapData data = image.LockBits(new Rectangle(startX, startY, w, h), System.Drawing.Imaging.ImageLockMode.ReadOnly, PixelFormat);
+            try
+            {
+                byte[] pixelData = new Byte[data.Stride];
+                for (int scanline = 0; scanline < data.Height; scanline++)
+                {
+                    Marshal.Copy(data.Scan0 + (scanline * data.Stride), pixelData, 0, data.Stride);
+                    for (int pixeloffset = 0; pixeloffset < data.Width; pixeloffset++)
+                    {
+                        // PixelFormat.Format32bppRgb means the data is stored
+                        // in memory as BGR. We want RGB, so we must do some 
+                        // bit-shuffling.
+                        rgbArray[offset + (scanline * scansize) + pixeloffset] =
+                            (pixelData[pixeloffset * PixelWidth + 2] << 16) +   // R 
+                            (pixelData[pixeloffset * PixelWidth + 1] << 8) +    // G
+                            pixelData[pixeloffset * PixelWidth];                // B
+                    }
+                }
+            }
+            finally
+            {
+                image.UnlockBits(data);
+            }
+        }
+
 
     }
 }

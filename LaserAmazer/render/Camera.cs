@@ -15,22 +15,22 @@ namespace LaserAmazer.Render
         public Camera(int width, int height)
         {
             position = new Vector3d(0, 0, 0);
-            projection = new Matrix4d().SetOrtho2D(-width / 2, width / 2, -height / 2, height / 2);
+            projection = new Matrix4d();//TODO .SetOrtho2D(-width / 2, width / 2, -height / 2, height / 2);
         }
 
-        public void setPosition(Vector3d position)
+        public void SetPosition(Vector3d position)
         {
             this.position = position;
         }
 
-        public Vector3d getPosition()
+        public Vector3d GetPosition()
         {
             return position;
         }
 
-        public Matrix4d getProjection()
+        public Matrix4d GetProjection()
         {
-            return projection.Translate(position, new Matrix4d());
+            return projection; //TODO .Translate(position, new Matrix4d());
         }
 
     }

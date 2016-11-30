@@ -24,24 +24,24 @@ namespace LaserAmazer.Level
             elementList.Clear();
             gameList.Clear();
             graphicsList.Clear();
-            elementList.Add(CreateUI.createButton(-2, 6, 3, 1.5f, () =>
+            elementList.Add(CreateUI.CreateButton(-2, 6, 3, 1.5f, () =>
             {
                 display = 0;
             }, new GameFont("Game", GameColor.TEAL)));
-            elementList.Add(CreateUI.createButton(2, 6, 3, 1.5f, () =>
+            elementList.Add(CreateUI.CreateButton(2, 6, 3, 1.5f, () =>
             {
                 display = 1;
             }, new GameFont("Graphics", GameColor.TEAL)));
-            elementList.Add(CreateUI.createButton(0, -6, 6, 1.5f, () =>
+            elementList.Add(CreateUI.CreateButton(0, -6, 6, 1.5f, () =>
             {
                 SaveGame.writeData();
-                GameInstance.setLevel(0);
+                GameInstance.SetLevel(0);
             }, new GameFont("Return to Main Menu", GameColor.TEAL)));
 
             gameList.Add(new Text(0f, 4f, Alignment.CENTER, "Game Options", GameColor.ORANGE, 1.5f));
             gameList.Add(new Text(-9f, 1f, "Show Level Complete -", GameColor.BLUE, 1.2f));
             gameList.Add(new Text(-5.4f, 0f, "Show Timer -", GameColor.BLUE, 1.2f));
-            complete = CreateUI.createButton(2f, 2.25f, 3, .8f, () =>
+            complete = CreateUI.CreateButton(2f, 2.25f, 3, .8f, () =>
             {
                 levelComplete = !levelComplete;
                 if (levelComplete)
@@ -55,7 +55,7 @@ namespace LaserAmazer.Level
                 GameInstance.levelCompleteDialogue = levelComplete;
             }, new GameFont(GameInstance.levelCompleteDialogue ? " Yes " : " No ", GameColor.YELLOW));
             gameList.Add(complete);
-            timer = CreateUI.createButton(2f, 0.25f, 3, .8f, () =>
+            timer = CreateUI.CreateButton(2f, 0.25f, 3, .8f, () =>
             {
                 showTimer = !showTimer;
                 if (showTimer)

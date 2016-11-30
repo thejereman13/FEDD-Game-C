@@ -113,7 +113,7 @@ namespace LaserAmazer.Render
         public void UpdateUniforms(Camera camera, Matrix4d target)
         {
             SetUniform("sampler", 0);
-            SetUniform("projection", camera.getProjection() * target);
+            SetUniform("projection", camera.GetProjection() * target);
         }
 
         /**

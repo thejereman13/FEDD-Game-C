@@ -13,11 +13,11 @@ namespace LaserAmazer.Level
 
         public override void RenderObjects()
         {
-            elementList.Add(CreateUI.createButton(0, -2f, 6f, 1.5f, () =>
+            elementList.Add(CreateUI.CreateButton(0, -2f, 6f, 1.5f, () =>
             {
                 GameInstance.SetLevel(0);
             }, new GameFont("Main Menu", GameColor.TEAL)));
-            elementList.Add(CreateUI.createButton(0, -4f, 6f, 1.5f, () =>
+            elementList.Add(CreateUI.CreateButton(0, -4f, 6f, 1.5f, () =>
             {
                 SaveGame.writeData();
                 Application.Exit();

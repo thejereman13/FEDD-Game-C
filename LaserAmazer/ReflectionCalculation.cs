@@ -58,9 +58,9 @@ namespace LaserAmazer
          */
         private static Vector2d ReflectionVector(Vector2d incidence, Vector2d surface)
         {
-            Vector2d resultant = new Vector2d();
+            /*Vector2d resultant = new Vector2d();
             Vector2d normal;
-            /*
+
             // Check for vertical sides of blocks, because JOML is stupid about infinite slopes
             if (surface.Y == double.NegativeInfinity) {
                 normal = new Vector2d(1, 0);
@@ -215,7 +215,9 @@ namespace LaserAmazer
                         }
                     }
                 }
-                catch (Exception e) { }
+                catch
+                {
+                }
             }
 
             return closest;
