@@ -1,0 +1,10 @@
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\bin\Debug\FEDDGame.exe.config
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.csprojResolveAssemblyReference.cache
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.Properties.Resources.resources
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.csproj.GenerateResource.Cache
+C:\Users\jerem\Desktop\Coding\FEDD-Game-C\FEDDGame\obj\Debug\FEDDGame.Form1.resources
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\bin\Debug\FEDDGame.exe.config
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Debug\FEDDGame.csprojResolveAssemblyReference.cache
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Debug\FEDDGame.Form1.resources
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Debug\FEDDGame.Properties.Resources.resources
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Debug\FEDDGame.csproj.GenerateResource.Cache
