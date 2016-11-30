@@ -1,3 +1,5 @@
+using LaserAmazer.gui;
+using System;
 using System.Collections.Generic;
 
 namespace LaserAmazer.level
@@ -10,18 +12,17 @@ namespace LaserAmazer.level
         protected List<UIElement> elementList = new List<UIElement>();
         protected double timeStart;
         private double timeStop;
-        //private static DecimalFormat timeFormat = new DecimalFormat("#.#");
 
         public Scene(string name)
         {
             this.name = name;
         }
 
-        public abstract void renderObjects();
+        public abstract void RenderObjects();
 
-        public virtual void logicLoop() { }
+        public virtual void LogicLoop() { }
 
-        public virtual void renderLoop()
+        public virtual void RenderLoop()
         {
             if (elementList != null)
             {
@@ -37,12 +38,12 @@ namespace LaserAmazer.level
             return name;
         }
 
-        public bool isActive()
+        public bool IsActive()
         {
             return active;
         }
 
-        public void setActive(bool active)
+        public void SetActive(bool active)
         {
             if (this.active == active) return;
 
@@ -50,15 +51,15 @@ namespace LaserAmazer.level
 
             if (active)
             {
-                timeStart = getTime();
+                timeStart = GetTime();
             }
             else
             {
-                timeStop = getTime();
+                timeStop = GetTime();
             }
         }
 
-        public virtual void checkClick(float mouseX, float mouseY)
+        public virtual void CheckClick(float mouseX, float mouseY)
         {
             foreach (UIElement e in elementList)
             {
@@ -69,11 +70,11 @@ namespace LaserAmazer.level
             }
         }
 
-        public double getElapsedTime()
+        public double GetElapsedTime()
         {
             if (active)
             {
-                return getTime() - timeStart;
+                return GetTime() - timeStart;
             }
             else
             {
@@ -81,18 +82,18 @@ namespace LaserAmazer.level
             }
         }
 
-        public string getElapsedSeconds()
+        public string GetElapsedSeconds()
         {
-            return getElapsedTime().ToString("#0.0");
+            return GetElapsedTime().ToString("#0.0");
         }
 
         /**
          * @return System time in seconds
          */
-        public double getTime()
+        public double GetTime()
         {
-            //return (double) System.nanoTime() / (double) 1000000000L;
-            return 0d;
+            TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+            return t.TotalSeconds;
         }
 
         public List<UIElement> getElementList()

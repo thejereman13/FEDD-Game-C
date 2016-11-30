@@ -1,3 +1,5 @@
+using LaserAmazer.gui;
+using LaserAmazer.render;
 using System.Windows.Forms;
 
 namespace LaserAmazer.level
@@ -9,15 +11,15 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
             elementList.Add(CreateUI.createButton(0, -2f, 6f, 1.5f, () =>
             {
-                GameInstance.setLevel(0);
+                GameInstance.SetLevel(0);
             }, new GameFont("Main Menu", GameColor.TEAL)));
             elementList.Add(CreateUI.createButton(0, -4f, 6f, 1.5f, () =>
             {
-                SaveData.writeData();
+                SaveGame.writeData();
                 Application.Exit();
             }, new GameFont("Quit Game", GameColor.RED)));
 

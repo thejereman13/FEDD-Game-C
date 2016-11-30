@@ -41,7 +41,7 @@ namespace LaserAmazer.render
             }
 
             splitCoords(coords);
-            base.setVertices(coords);
+            base.SetVertices(coords);
             base.xOffset = xOffset;
             base.yOffset = yOffset;
         }

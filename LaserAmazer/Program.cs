@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LaserAmazer
@@ -18,7 +15,7 @@ namespace LaserAmazer
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             Console.WriteLine("Yo");
-            new FEDDGameLaunch();
+            new LaserAmazerLaunch();
         }
     }
 }

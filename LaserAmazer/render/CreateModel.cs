@@ -11,7 +11,7 @@ namespace LaserAmazer.render
          * @param xOffset
          * @param yOffset
          */
-        public static Model createBox(float xOffset, float yOffset, float size)
+        public static Model CreateBox(float xOffset, float yOffset, float size)
         {
             // Vertices for a quadrilateral
             float[] vertices = new float[] {
@@ -36,12 +36,12 @@ namespace LaserAmazer.render
             return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, GameTexture.UNMOVEABLE_BOX));     //Add the model to the objectManager
         }
 
-        public static Model createBox(float xOffset, float yOffset)
+        public static Model CreateBox(float xOffset, float yOffset)
         {
-            return createBox(xOffset, yOffset, 1); // Default size of 1
+            return CreateBox(xOffset, yOffset, 1); // Default size of 1
         }
 
-        public static Model createTriangle(float xOffset, float yOffset, float xSide, float ySide)
+        public static Model CreateTriangle(float xOffset, float yOffset, float xSide, float ySide)
         {
             // Right Triangle
             float[] vertices = new float[] {
@@ -63,7 +63,7 @@ namespace LaserAmazer.render
             return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.UNMOVEABLE_BOX));
         }
 
-        public static MovableModel createMovableTriangle(float xOffset, float yOffset, float xSide, float ySide)
+        public static MovableModel CreateMovableTriangle(float xOffset, float yOffset, float xSide, float ySide)
         {
             float xO = xSide / 6f;
             float yO = ySide / 6f;
@@ -95,7 +95,7 @@ namespace LaserAmazer.render
          * @param size
          * @return
          */
-        public static MovableModel createMovableBox(float xOffset, float yOffset, float size)
+        public static MovableModel CreateMovableBox(float xOffset, float yOffset, float size)
         {
             // Vertices for a quadrilateral
             float[] vertices = new float[] {
@@ -120,9 +120,9 @@ namespace LaserAmazer.render
             return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));
         }
 
-        public static MovableModel createMovableBox(float xOffset, float yOffset)
+        public static MovableModel CreateMovableBox(float xOffset, float yOffset)
         {
-            return createMovableBox(xOffset, yOffset, 1);
+            return CreateMovableBox(xOffset, yOffset, 1);
         }
 
         /**
@@ -134,7 +134,7 @@ namespace LaserAmazer.render
          * @param height
          * @return
          */
-        public static Model createTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height)
+        public static Model CreateTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height)
         {
             // Vertices for a trapezoid
             float[] vertices = new float[] {
@@ -159,7 +159,7 @@ namespace LaserAmazer.render
             return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, GameTexture.MOVEABLE_BOX));   //Add the model to the objectManager
         }
 
-        public static MovableModel createMovableTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height)
+        public static MovableModel CreateMovableTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height)
         {
             // Vertices for a trapezoid
             float[] vertices = new float[] {
@@ -184,7 +184,7 @@ namespace LaserAmazer.render
             return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));    //Add the model to the objectManager
         }
 
-        public static Wall createWall(float xOffset, float yOffset, float width, float height)
+        public static Wall CreateWall(float xOffset, float yOffset, float width, float height)
         {
             // Vertices for a trapezoid
             float[] vertices = new float[] {
@@ -212,7 +212,7 @@ namespace LaserAmazer.render
             return m;
         }
 
-        private static LaserModel createLaser(float begX, float begY, double angle, float length)
+        private static LaserModel CreateLaser(float begX, float begY, double angle, float length)
         {
             float[] texture = new float[] {
                 0, 0,
@@ -229,9 +229,9 @@ namespace LaserAmazer.render
             return new LaserModel(texture, indices, begX, begY, (float)angle, length);
         }
 
-        public static LaserWrapper newLaser(float begX, float begY, double angle, float length)
+        public static LaserWrapper NewLaser(float begX, float begY, double angle, float length)
         {
-            return new LaserWrapper(createLaser(begX, begY, angle - 90f, length));
+            return new LaserWrapper(CreateLaser(begX, begY, angle - 90f, length));
         }
 
         /**
@@ -242,7 +242,7 @@ namespace LaserAmazer.render
          * @param vect
          * @return
          */
-        public static LaserModel createReflectedLaser(float begX, float begY, Vector2d vect)
+        public static LaserModel CreateReflectedLaser(float begX, float begY, Vector2d vect)
         {
             float[] texture = new float[] {
                 0, 0,
@@ -267,7 +267,7 @@ namespace LaserAmazer.render
          * @param angle
          * @return
          */
-        public static LaserStart createLaserStart(float xOffset, float yOffset, int side, double angle)
+        public static LaserStart CreateLaserStart(float xOffset, float yOffset, int side, double angle)
         {
             float width = 1, height = 1;
             float[] vertices = new float[] {
@@ -289,8 +289,8 @@ namespace LaserAmazer.render
                 2, 3, 0
         };
 
-            LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset - .1f * (float)Math.Sin(angle), yOffset - height / 2f + .1f, angle, .1f));
-            l.rotate(-90 - 90 * side);
+            LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, NewLaser(xOffset - .1f * (float)Math.Sin(angle), yOffset - height / 2f + .1f, angle, .1f));
+            l.Rotate(-90 - 90 * side);
             GameInstance.objectManager.addModel(l);
 
             return l;
@@ -326,8 +326,8 @@ namespace LaserAmazer.render
                 2, 3, 0
         };
 
-            LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height / 2f, 0, .1f));
-            l.rotate(-90 - 90 * side);
+            LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, NewLaser(xOffset, yOffset - height / 2f, 0, .1f));
+            l.Rotate(-90 - 90 * side);
             GameInstance.objectManager.addModel(l);
 
             return l;

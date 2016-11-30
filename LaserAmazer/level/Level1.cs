@@ -1,3 +1,5 @@
+using LaserAmazer.render;
+
 namespace LaserAmazer.level
 {
     public class Level1 : Level
@@ -9,34 +11,34 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
-            base.renderObjects();
+            base.RenderObjects();
 
             // Inner bounds
-            CreateModel.createWall(0, 1f, .25f, 18f);
+            CreateModel.CreateWall(0, 1f, .25f, 18f);
 
             // Laser start/stop
-            laserWrappers.Add(CreateModel.createLaserStart(-10f, -1f, 2, -45));
+            laserWrappers.Add(CreateModel.CreateLaserStart(-10f, -1f, 2, -45));
             CreateModel.createLaserStop(7f, 9.9f);
 
-            m = CreateModel.createMovableBox(4, 0);
-            m.rotate(-30);
+            m = CreateModel.CreateMovableBox(4, 0);
+            m.Rotate(-30);
 
-            CreateModel.createMovableBox(2, 4);
+            CreateModel.CreateMovableBox(2, 4);
 
-            m = CreateModel.createBox(7, 4, 1); // Stationary box
+            m = CreateModel.CreateBox(7, 4, 1); // Stationary box
 
             isRendered = true;
         }
 
-        public override void logicLoop()
+        public override void LogicLoop()
         {
             if (isRendered)
             {
-                base.logicLoop();
+                base.LogicLoop();
 
-                m.rotate(1);
+                m.Rotate(1);
             }
         }
 

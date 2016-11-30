@@ -1,3 +1,7 @@
+using System.Drawing;
+using System.IO;
+using System.Reflection;
+
 namespace LaserAmazer.render
 {
     public class Texture
@@ -11,13 +15,13 @@ namespace LaserAmazer.render
          */
         public Texture(string path)
         {
-            BufferedImage image;
+            Assembly assembly = Assembly.GetExecutingAssembly();
 
             try
             {
-                image = ImageIO.read(getClass().getResourceAsStream("/textures/" + path));
-                width = image.getWidth();
-                height = image.getHeight();
+                Image image = Image.FromStream(assembly.GetManifestResourceStream("/textures/" + path));
+                width = image.Width;
+                height = image.Height;
 
                 int[] pixelsRaw = new int[width * height * 4];
                 pixelsRaw = image.getRGB(0, 0, width, height, null, 0, width);
@@ -50,17 +54,17 @@ namespace LaserAmazer.render
             }
         }
 
-        protected void finalize()
+        protected void Finalize()
         {
             glDeleteTextures(texture);
-            base.finalize();
+            base.Finalize();
         }
 
         /**
          * Creates the texture within LWJGL
          * @param int sampler
          */
-        public void bind(int sampler)
+        public void Bind(int sampler)
         {
             if (sampler >= 0 && sampler <= 31)
             {
@@ -72,7 +76,7 @@ namespace LaserAmazer.render
         /**
          * Removes the texture from LWJGL
          */
-        public void unbind()
+        public void Unbind()
         {
             glBindTexture(GL_TEXTURE_2D, 0);
         }

@@ -10,9 +10,9 @@ namespace LaserAmazer.render
         /**
          * Called by ReflectionCalculation once a laser has its destination set to this object
          */
-        public void laserIntersection()
+        public void LaserIntersection()
         {
-            GameInstance.setState(State.LEVEL_COMPLETE);
+            GameInstance.SetState(State.LEVEL_COMPLETE);
         }
 
     }

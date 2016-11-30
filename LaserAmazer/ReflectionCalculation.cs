@@ -1,3 +1,6 @@
+using LaserAmazer.gui;
+using LaserAmazer.math;
+using LaserAmazer.render;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -18,27 +21,27 @@ namespace LaserAmazer
          * @param laser
          * @param models
          */
-        public static object[] reflect(LaserModel laser)
+        public static object[] Reflect(LaserModel laser)
         {
-            findIntersects(laser, GameInstance.objectManager.getModels());
+            FindIntersects(laser, GameInstance.objectManager.getModels());
 
             // If there exists at least one valid intersection
 
             if (intersects.Count != 0)
             {
-                closest = getClosestIntersection(); // Find the closest one
+                closest = GetClosestIntersection(); // Find the closest one
 
                 // Pythagorean theorem to find length of vector
-                float length = (float)Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]);
+                float length = (float)MathExtension.Hypotenuse((float)closest[1] - coords[0], (float)closest[2] - coords[1]);
 
-                laser.setLength(length); // Modify the laser to the correct length
+                laser.SetLength(length); // Modify the laser to the correct length
 
                 // Calculates reflected vector using the laser's vector and a new vector representing the side of the Model
-                Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3]));
+                Vector2d resultantV = ReflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3]));
 
-                reflectionCallback((Model)closest[0], laser);
+                ReflectionCallback((Model)closest[0], laser);
 
-                return new Object[] { CreateModel.createReflectedLaser((float) closest[1], (float) closest[2], resultantV),
+                return new Object[] { CreateModel.CreateReflectedLaser((float) closest[1], (float) closest[2], resultantV),
                     closest[0] };
             }
 
@@ -53,7 +56,7 @@ namespace LaserAmazer
          * @param surface
          * @return
          */
-        private static Vector2d reflectionVector(Vector2d incidence, Vector2d surface)
+        private static Vector2d ReflectionVector(Vector2d incidence, Vector2d surface)
         {
             Vector2d resultant = new Vector2d();
             Vector2d normal;
@@ -83,12 +86,12 @@ namespace LaserAmazer
         static float xIntercept;
         static float yIntercept;
 
-        private static void findIntersects(LaserModel laser, List<Model> models)
+        private static void FindIntersects(LaserModel laser, List<Model> models)
         {
             intersects.Clear(); // Remove existing intersects from the list
             intersects.TrimExcess();
-            float slope = (float)Math.Tan(laser.getAngle());
-            coords = laser.getCoords();
+            float slope = (float)Math.Tan(laser.GetAngle());
+            coords = laser.GetCoords();
             int xDir = laser.xDir;
             int yDir = laser.yDir;
             if (slope < .01f && slope > 0)
@@ -108,8 +111,8 @@ namespace LaserAmazer
                 {
                     for (int side = 0; side < m.sideCount; side++)
                     {
-                        v = getY1X1(m, side);
-                        sl = getSlope(v);
+                        v = GetY1X1(m, side);
+                        sl = GetSlope(v);
 
                         // If the laser is vertical
                         if (slope == float.PositiveInfinity || slope == float.NegativeInfinity)
@@ -172,7 +175,7 @@ namespace LaserAmazer
          * 
          * @return
          */
-        private static object[] getClosestIntersection()
+        private static object[] GetClosestIntersection()
         {
             // Start with a massive value
             closest = new Object[] { null, float.MaxValue / 2f, float.MaxValue / 2f, 0f };
@@ -187,10 +190,10 @@ namespace LaserAmazer
             {
                 try
                 {
-                    length = (float)Math.Hypot((float)b[1] - coords[0], (float)b[2] - coords[1]);
+                    length = (float)MathExtension.Hypotenuse((float)b[1] - coords[0], (float)b[2] - coords[1]);
                     // If the new object is closer than the old one
-                    if ((Math.hypot((float)b[1] - coords[0], (float)b[2] - coords[1])) < (Math
-                            .hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1])))
+                    if ((MathExtension.Hypotenuse((float)b[1] - coords[0], (float)b[2] - coords[1])) < 
+                        (MathExtension.Hypotenuse((float)closest[1] - coords[0], (float)closest[2] - coords[1])))
                     {
                         midpoint[0] = ((float)b[1] + coords[0]) / 2f;
                         midpoint[1] = ((float)b[2] + coords[1]) / 2f;
@@ -226,7 +229,7 @@ namespace LaserAmazer
          * @param side
          * @return
          */
-        private static float[] getY1X1(Model mod, int side)
+        private static float[] GetY1X1(Model mod, int side)
         {
             if (side == 0)
             {
@@ -255,7 +258,7 @@ namespace LaserAmazer
          * @param vert
          * @return
          */
-        private static float getSlope(float[] vert)
+        private static float GetSlope(float[] vert)
         {
             return (vert[3] - vert[1]) / (vert[2] - vert[0]);
         }
@@ -265,11 +268,11 @@ namespace LaserAmazer
          * @param m
          * @param l
          */
-        private static void reflectionCallback(Model m, LaserModel l)
+        private static void ReflectionCallback(Model m, LaserModel l)
         {
             if (m is LaserStop)
             {
-                ((LaserStop)m).laserIntersection();
+                ((LaserStop)m).LaserIntersection();
             }
         }
 

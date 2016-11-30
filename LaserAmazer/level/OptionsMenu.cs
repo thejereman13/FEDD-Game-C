@@ -1,3 +1,5 @@
+using LaserAmazer.gui;
+using LaserAmazer.render;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +19,7 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
             elementList.Clear();
             gameList.Clear();
@@ -32,7 +34,7 @@ namespace LaserAmazer.level
             }, new GameFont("Graphics", GameColor.TEAL)));
             elementList.Add(CreateUI.createButton(0, -6, 6, 1.5f, () =>
             {
-                SaveData.writeData();
+                SaveGame.writeData();
                 GameInstance.setLevel(0);
             }, new GameFont("Return to Main Menu", GameColor.TEAL)));
 
@@ -101,9 +103,9 @@ namespace LaserAmazer.level
             graphicsList.Add(multisampling);
         }
 
-        public override void renderLoop()
+        public override void RenderLoop()
         {
-            base.renderLoop();
+            base.RenderLoop();
             if (display == 0)
             {
                 foreach (UIElement e in gameList)
@@ -118,9 +120,9 @@ namespace LaserAmazer.level
             }
         }
 
-        public override void checkClick(float mouseX, float mouseY)
+        public override void CheckClick(float mouseX, float mouseY)
         {
-            base.checkClick(mouseX, mouseY);
+            base.CheckClick(mouseX, mouseY);
             foreach (UIElement e in gameList)
             {
                 if (e is IClickable)

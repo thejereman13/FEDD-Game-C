@@ -10,7 +10,7 @@ namespace LaserAmazer.render
 
         public MovingBox(float x, float y, int maxDistance, float xVelocity, float yVelocity)
         {
-            this.model = CreateModel.createBox(x, y);
+            this.model = CreateModel.CreateBox(x, y);
             this.maxDistance = maxDistance;
             this.xVelocity = xVelocity;
             this.yVelocity = yVelocity;
@@ -18,18 +18,18 @@ namespace LaserAmazer.render
 
         public MovingBox(float x, float y, int maxDistance, int distance, float xVelocity, float yVelocity)
         {
-            this.model = CreateModel.createBox(x, y);
+            this.model = CreateModel.CreateBox(x, y);
             this.maxDistance = maxDistance;
             this.distance = distance;
             this.xVelocity = xVelocity;
             this.yVelocity = yVelocity;
         }
 
-        public void logicLoop()
+        public void LogicLoop()
         {
             if (distance < maxDistance)
             {
-                model.move(0.05f * xVelocity, 0.05f * yVelocity, 0f); // Moves the box back and forth
+                model.Move(0.05f * xVelocity, 0.05f * yVelocity, 0f); // Moves the box back and forth
                 distance++;
             }
             else
@@ -40,9 +40,9 @@ namespace LaserAmazer.render
             }
         }
 
-        public void rotate(float angle)
+        public void Rotate(float angle)
         {
-            model.rotate(angle);
+            model.Rotate(angle);
         }
 
     }

@@ -25,14 +25,14 @@ namespace LaserAmazer.render
          * @param x1
          * @param y1
          */
-        public LaserModel(float[] tCoords, int[] indices, float x0, float y0, float angle, float length) : base(getVertices(x0, y0, angle, length, LASER_WIDTH), tCoords, indices, 4, GameTexture.LASER)
+        public LaserModel(float[] tCoords, int[] indices, float x0, float y0, float angle, float length) : base(GetVertices(x0, y0, angle, length, LASER_WIDTH), tCoords, indices, 4, GameTexture.LASER)
         {
             this.angle = angle;
             this.vect = new Vector2d(length * Math.Cos(angle), length * Math.Sin(angle));
             coords[0] = x0;
             coords[1] = y0;
 
-            determineDirection();
+            DetermineDirection();
         }
 
         /**
@@ -43,14 +43,14 @@ namespace LaserAmazer.render
          * @param y0
          * @param vect
          */
-        public LaserModel(float[] tCoords, int[] indices, float x0, float y0, Vector2d vect) : base(getVertices(x0, y0, findAngle(vect), (float)vect.Length, LASER_WIDTH), tCoords, indices, 4, GameTexture.LASER)
+        public LaserModel(float[] tCoords, int[] indices, float x0, float y0, Vector2d vect) : base(GetVertices(x0, y0, FindAngle(vect), (float)vect.Length, LASER_WIDTH), tCoords, indices, 4, GameTexture.LASER)
         {
-            this.angle = findAngle(vect);
+            this.angle = FindAngle(vect);
             this.vect = vect;
             coords[0] = x0;
             coords[1] = y0;
 
-            determineDirection();
+            DetermineDirection();
         }
 
         /**
@@ -62,7 +62,7 @@ namespace LaserAmazer.render
          * @param LASER_WIDTH
          * @return
          */
-        private static float[] getVertices(float begX, float begY, float angle, float length, float width)
+        private static float[] GetVertices(float begX, float begY, float angle, float length, float width)
         {
             length += .05f;
 
@@ -86,12 +86,12 @@ namespace LaserAmazer.render
         /**
          * @return float value of the angle of the laser line
          */
-        public float getAngle()
+        public float GetAngle()
         {
             return this.angle;
         }
 
-        private static float findAngle(Vector2d vec)
+        private static float FindAngle(Vector2d vec)
         {
             return (float)Math.Atan2(vec.Y, vec.X);
         }
@@ -100,17 +100,17 @@ namespace LaserAmazer.render
          * Sets the initial angle of the laser
          * @param a
          */
-        public void setAngle(float a)
+        public void SetAngle(float a)
         {
             this.angle = a;
             this.vect = new Vector2d(.1f * Math.Cos(a), .1f * Math.Sin(a));
-            determineDirection();
+            DetermineDirection();
         }
 
         /**
          * Sets a value of 1 for positive, -1 for negative for the vector directions of the laser
          */
-        private void determineDirection()
+        private void DetermineDirection()
         {
             // Y
             if (Math.Sin(angle) >= 0)
@@ -133,22 +133,22 @@ namespace LaserAmazer.render
             }
         }
 
-        public void setLength(float length)
+        public void SetLength(float length)
         {
-            this.vertices = getVertices(coords[0], coords[1], angle, length, LASER_WIDTH);
+            this.vertices = GetVertices(coords[0], coords[1], angle, length, LASER_WIDTH);
         }
 
-        public void setVector(Vector2d vect)
+        public void SetVector(Vector2d vect)
         {
             this.vect = vect;
-            this.angle = findAngle(vect);
+            this.angle = FindAngle(vect);
         }
 
         /**
          * Returns the coordinates of the line from which the laser is generated
          * @return
          */
-        public float[] getCoords()
+        public float[] GetCoords()
         {
             return this.coords;
         }
@@ -157,7 +157,7 @@ namespace LaserAmazer.render
          * Sets the starting coordinates of the laser
          * @param f
          */
-        public void setCoords(float[] f)
+        public void SetCoords(float[] f)
         {
             this.coords = f;
         }

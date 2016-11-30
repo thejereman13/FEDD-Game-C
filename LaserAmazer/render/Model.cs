@@ -84,7 +84,7 @@ namespace LaserAmazer.render
             this.texStr = defaultTexString;
         }
 
-        protected void finalize()
+        protected void Finalize()
         {
             GL.DeleteBuffer(vertexId);
             GL.DeleteBuffer(textureId);
@@ -94,7 +94,7 @@ namespace LaserAmazer.render
         /**
          * Render all of the vertices on screen.
          */
-        public void render()
+        public void Render()
         {
             if (!generated)
             {
@@ -124,7 +124,7 @@ namespace LaserAmazer.render
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            tex.bind(0);
+            tex.Bind(0);
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
 
@@ -142,7 +142,7 @@ namespace LaserAmazer.render
 
             GL.DisableVertexAttribArray(0);
             GL.DisableVertexAttribArray(1);
-            tex.unbind();
+            tex.Unbind();
         }
 
         /**
@@ -171,7 +171,7 @@ namespace LaserAmazer.render
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public void move(float x, float y, float z)
+        public void Move(float x, float y, float z)
         {
             for (int i = 0; i < this.sideCount; i++)
             {
@@ -187,7 +187,7 @@ namespace LaserAmazer.render
             }
         }
 
-        public void setVertices(float[] vertices)
+        public void SetVertices(float[] vertices)
         {
             this.vertices = vertices;
         }
@@ -196,7 +196,7 @@ namespace LaserAmazer.render
         /// Rotates the model by the angle specified in degrees
         /// </summary>
         /// <param name="angle"></param>
-        public void rotate(float angle)
+        public void Rotate(float angle)
         {
             angle *= ((float)Math.PI / 180f);
             for (int i = 0; i < sideCount; i++)

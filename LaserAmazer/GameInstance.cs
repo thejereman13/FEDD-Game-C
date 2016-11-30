@@ -1,10 +1,11 @@
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
-using System.Collections;
 using System.Threading;
 using OpenTK;
 using System;
 using System.Diagnostics;
+using LaserAmazer.level;
+using LaserAmazer.render;
 
 namespace LaserAmazer
 {
@@ -24,19 +25,19 @@ namespace LaserAmazer
         public static readonly bool demoMode = true;
 
         public static List<Scene> scenes = new List<Scene>() {
-        new MainMenu(),
-        new OptionsMenu(),
-        new Level1(),
-        new Level2(),
-        new Level3(),
-        new Level4(),
-        new Level5(),
-        new Level6(),
-        new Level7(),
-        new Level8(),
-        new Level9(),
-        new Level10()
-    };
+            new MainMenu(),
+            new OptionsMenu(),
+            new Level1(),
+            new Level2(),
+            new Level3(),
+            new Level4(),
+            new Level5(),
+            new Level6(),
+            new Level7(),
+            new Level8(),
+            new Level9(),
+            new Level10()
+        };
 
         public static int levNum = 0; // Start with 0
         private static float fadeN = 90f; // Amount of fade in degrees (0-90)
@@ -53,8 +54,8 @@ namespace LaserAmazer
             // Run and quit on error
             try
             {
-                setup();
-                renderLoop();
+                Setup();
+                RenderLoop();
             }
             finally
             {
@@ -66,7 +67,7 @@ namespace LaserAmazer
         /**
          * Setup all the window settings
          */
-        private void setup()
+        private void Setup()
         {
             SaveGame.readData();
             //	new ModLoader();
@@ -91,7 +92,7 @@ namespace LaserAmazer
         /**
          * Game render loop
          */
-        private void renderLoop()
+        private void RenderLoop()
         {
             //TODO Should probably throw exception and exit here if window is null
 
@@ -117,16 +118,13 @@ namespace LaserAmazer
             double frameCap = 1.0 / 60; // 60 FPS
 
             double frameTime = 0;
-            double time = getTime();
+            double time = GetTime();
             double unprocessed = 0;
 
-            setState(State.GAME); // Set the game state
+            SetState(State.GAME); // Set the game state
+            SetLevel(0); // Set the starting level
 
-            //
-            setLevel(0); // Set the starting level
-                         //
-
-            new Thread(() => logicLoop()).Start(); // Run the logic in a separate thread
+            new Thread(() => LogicLoop()).Start(); // Run the logic in a separate thread
 
             //glfwSetWindowSize(window.window, 1200, 800);
             window.centerWindow(); // Center window on screen
@@ -137,7 +135,7 @@ namespace LaserAmazer
 
                 // Control frames per second
                 {
-                    double timeNow = getTime();
+                    double timeNow = GetTime();
                     double elapsed = timeNow - time;
                     unprocessed += elapsed;
                     frameTime += elapsed;
@@ -160,64 +158,64 @@ namespace LaserAmazer
                 // Render when scene changes
                 if (canRender)
                 {
-                    renderLevel();
+                    RenderLevel();
                     GL.Clear(ClearBufferMask.ColorBufferBit);
 
                     if (state.Equals(State.GAME))
                     {
                         gameState = true;
-                        shader.bind();
-                        shader.updateUniforms(camera, target);
+                        shader.Bind();
+                        shader.UpdateUniforms(camera, target);
                         objectManager.renderAll();
                         window.updateTime();
                         window.renderElements();
-                        getCurrentLevel().renderLoop();
+                        GetCurrentLevel().RenderLoop();
                     }
                     else if (state.Equals(State.LEVEL_COMPLETE))
                     {
-                        getCurrentLevel().setActive(false); // Set level as inactive
+                        GetCurrentLevel().SetActive(false); // Set level as inactive
 
                         // If user has the level complete dialogue enabled
                         if (levelCompleteDialogue)
                         {
                             gameState = false;
 
-                            shader.bind();
-                            shader.updateUniforms(camera, target);
+                            shader.Bind();
+                            shader.UpdateUniforms(camera, target);
                             objectManager.renderAll();
 
                             window.renderElements();
 
                             // Add dark rectangle to make text more readable
-                            shader.unbind();
+                            shader.Unbind();
                             GL.Enable(EnableCap.Blend);
                             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
                             GL.Color4(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
                             GL.Rect(-10f, -10f, 10f, 10f);
 
-                            Scene latestLevel = getCurrentLevel();
+                            Scene latestLevel = GetCurrentLevel();
 
                             menuItem.renderString("Congratulations!", Alignment.CENTER, 0.1f, 0.45f);
-                            menuItem.renderString("You've completed " + latestLevel.getName() + " in " + latestLevel.getElapsedSeconds() + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
+                            menuItem.renderString("You've completed " + latestLevel.getName() + " in " + latestLevel.GetElapsedSeconds() + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
                             startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
                         }
                         else
                         {
-                            setState(State.NEXT_LEVEL);
+                            SetState(State.NEXT_LEVEL);
                         }
                     }
                     else if (state.Equals(State.NEXT_LEVEL))
                     {
                         gameState = false;
-                        nextLevel();
-                        setState(State.GAME);
+                        NextLevel();
+                        SetState(State.GAME);
                     }
 
                     if (!state.Equals(State.LEVEL_COMPLETE))
                     {
                         // Fading
-                        shader.unbind();
+                        shader.Unbind();
                         GL.Enable(EnableCap.Blend);
                         GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
@@ -236,7 +234,7 @@ namespace LaserAmazer
             SaveGame.writeData();
         }
 
-        private void logicLoop()
+        private void LogicLoop()
         {
             Thread.CurrentThread.Name = "Logic";
             int timing = (int)Math.Round(1f / 60 * 1000f);  // Get the number of milliseconds between frames based on 60 times a second
@@ -245,14 +243,14 @@ namespace LaserAmazer
             {
                 if (!gameState) continue;
 
-                double timeNow = getTime(); // Get time at the start of the loop
+                double timeNow = GetTime(); // Get time at the start of the loop
 
                 // Make sure it's the active level
-                if (getCurrentLevel().isActive())
-                    getCurrentLevel().logicLoop();
+                if (GetCurrentLevel().IsActive())
+                    GetCurrentLevel().LogicLoop();
 
                 {
-                    int sleeptime = timing - (int)(getTime() - timeNow); // Sync the game loop to update at the refresh rate
+                    int sleeptime = timing - (int)(GetTime() - timeNow); // Sync the game loop to update at the refresh rate
                                                                          //System.out.println(sleeptime);
                     try
                     {
@@ -269,25 +267,25 @@ namespace LaserAmazer
         /**
          * @return System time in seconds
          */
-        public double getTime()
+        public double GetTime()
         {
             return timer.ElapsedMilliseconds;
         }
 
-        public static void setState(State s)
+        public static void SetState(State s)
         {
-            fade();
+            Fade();
             state = s;
         }
 
-        public static State getState()
+        public static State GetState()
         {
             return state;
         }
 
-        private static void nextLevel()
+        private static void NextLevel()
         {
-            getCurrentLevel().setActive(false); // No longer the active level
+            GetCurrentLevel().SetActive(false); // No longer the active level
 
             // If all levels complete, reset to level 0
             levNum++;
@@ -298,19 +296,19 @@ namespace LaserAmazer
             if (levNum > scenes.Count - 1)
             {
                 levNum = 0;
-                setLevel(scenes.Count - 1); // Set to GameComplete (last level)
+                SetLevel(scenes.Count - 1); // Set to GameComplete (last level)
             }
 
-            getCurrentLevel().setActive(true); // Set new active level
+            GetCurrentLevel().SetActive(true); // Set new active level
             hasLevel = false;
         }
 
-        public static Scene getCurrentLevel()
+        public static Scene GetCurrentLevel()
         {
             return scenes[levNum];
         }
 
-        public static void setLevel(int levelNumber)
+        public static void SetLevel(int levelNumber)
         {
             if (levelNumber > scenes.Count - 1)
             {
@@ -332,20 +330,20 @@ namespace LaserAmazer
                     currentLevel = levNum;
             }
 
-            fade();
+            Fade();
             latestLevel = (levNum <= latestLevel) ? (latestLevel) : (levNum);
-            scenes[levNum].setActive(true); // Set active level
+            scenes[levNum].SetActive(true); // Set active level
             hasLevel = false;
         }
 
-        private void renderLevel()
+        private void RenderLevel()
         {
             if (levNum < scenes.Count && !hasLevel)
             {
                 objectManager.clearAll();
                 window.clearElements();
                 window.addElements();
-                getCurrentLevel().renderObjects(); // Add all objects to the scene from the level class
+                GetCurrentLevel().RenderObjects(); // Add all objects to the scene from the level class
                 objectManager.updateModels();
                 hasLevel = true;
             }
@@ -355,7 +353,7 @@ namespace LaserAmazer
             }
         }
 
-        private static void fade()
+        private static void Fade()
         {
             fadeN = 90f;
         }

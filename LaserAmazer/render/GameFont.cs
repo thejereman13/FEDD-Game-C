@@ -54,7 +54,7 @@ namespace LaserAmazer.render
 
         public void renderString(string str, float x, float y, float characterWidth)
         {
-            GameInstance.shader.unbind();
+            GameInstance.shader.Unbind();
 
             float ratio = GameInstance.window.ratio;
             float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
@@ -113,7 +113,7 @@ namespace LaserAmazer.render
             GL.End();
             GL.PopMatrix();
             GL.PopAttrib();
-            GameInstance.shader.bind();
+            GameInstance.shader.Bind();
         }
 
         public void renderString(string str, Alignment align, float y, float characterWidth)

@@ -3,3 +3,7 @@ C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Deb
 C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Debug\FEDDGame.Properties.Resources.resources
 C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\FEDDGame\obj\Debug\LaserAmazer.csproj.GenerateResource.Cache
 C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\LaserAmazer\bin\Debug\FEDDGame.exe.config
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\LaserAmazer\obj\Debug\LaserAmazer.csprojResolveAssemblyReference.cache
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\LaserAmazer\obj\Debug\FEDDGame.Form1.resources
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\LaserAmazer\obj\Debug\FEDDGame.Properties.Resources.resources
+C:\Users\Matt\Documents\Visual Studio 2015\Projects\LaserAmazer\LaserAmazer\obj\Debug\LaserAmazer.csproj.GenerateResource.Cache

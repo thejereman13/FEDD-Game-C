@@ -10,28 +10,28 @@ namespace LaserAmazer.render
             this.laser = laser;
         }
 
-        public new void render()
+        public new void Render()
         {
-            base.render();
-            laser.render();
+            base.Render();
+            laser.Render();
         }
 
-        public void reflect()
+        public void Reflect()
         {
-            laser.runReflections();
+            laser.RunReflections();
         }
 
-        public void setLaser(LaserWrapper l)
+        public void SetLaser(LaserWrapper l)
         {
             this.laser = l;
         }
 
-        public new void rotate(float angle)
+        public new void Rotate(float angle)
         {
-            base.rotate(angle);
+            base.Rotate(angle);
 
             if (laser != null)
-                laser.rotateStart(angle, base.xOffset, base.yOffset);
+                laser.RotateStart(angle, base.xOffset, base.yOffset);
         }
 
     }

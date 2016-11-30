@@ -20,7 +20,7 @@ namespace LaserAmazer.render
 
             // Vertex shader
             vs = GL.CreateShader(ShaderType.VertexShader);
-            GL.ShaderSource(vs, readFile(path + ".vs"));
+            GL.ShaderSource(vs, ReadFile(path + ".vs"));
             GL.CompileShader(vs);
 
             /*
@@ -32,7 +32,7 @@ namespace LaserAmazer.render
 
             // Fragment shader
             fs = GL.CreateShader(ShaderType.FragmentShader);
-            GL.ShaderSource(fs, readFile(path + ".fs"));
+            GL.ShaderSource(fs, ReadFile(path + ".fs"));
             GL.CompileShader(fs);
 
             /* Check for shader error
@@ -64,7 +64,7 @@ namespace LaserAmazer.render
             */
         }
 
-        protected void finalize()
+        protected void Finalize()
         {
             GL.DetachShader(program, vs);
             GL.DetachShader(program, fs);
@@ -76,7 +76,7 @@ namespace LaserAmazer.render
         /**
          * Installs the program object as part of current rendering state
          */
-        public void bind()
+        public void Bind()
         {
             GL.UseProgram(program);
         }
@@ -84,7 +84,7 @@ namespace LaserAmazer.render
         /**
          * Removes/resets the program object
          */
-        public void unbind()
+        public void Unbind()
         {
             GL.UseProgram(0);
         }
@@ -94,7 +94,7 @@ namespace LaserAmazer.render
          * @param path
          * @return String with the contents of the shader file
          */
-        private string readFile(string path)
+        private string ReadFile(string path)
         {
             try
             {
@@ -110,10 +110,10 @@ namespace LaserAmazer.render
             return null;
         }
 
-        public void updateUniforms(Camera camera, Matrix4d target)
+        public void UpdateUniforms(Camera camera, Matrix4d target)
         {
-            setUniform("sampler", 0);
-            setUniform("projection", camera.getProjection() * target);
+            SetUniform("sampler", 0);
+            SetUniform("projection", camera.getProjection() * target);
         }
 
         /**
@@ -121,7 +121,7 @@ namespace LaserAmazer.render
          * @param name
          * @param value
          */
-        private void setUniform(string name, int value)
+        private void SetUniform(string name, int value)
         {
             int location = GL.GetUniformLocation(program, name);
 
@@ -134,7 +134,7 @@ namespace LaserAmazer.render
          * @param name
          * @param matrix
          */
-        private void setUniform(string name, Matrix4d matrix)
+        private void SetUniform(string name, Matrix4d matrix)
         {
             int location = GL.GetUniformLocation(program, name);
 
