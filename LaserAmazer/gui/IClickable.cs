@@ -1,10 +1,10 @@
 using System;
 
-namespace LaserAmazer.gui
+namespace LaserAmazer.Gui
 {
     public interface IClickable
     {
-        void setCallback(Action r);
-        bool checkClick(float xPos, float yPos);
+        void SetCallback(Action r);
+        bool CheckClick(float xPos, float yPos);
     }
 }

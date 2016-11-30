@@ -1,4 +1,4 @@
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public abstract class Menu : Scene
     {

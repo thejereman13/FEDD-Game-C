@@ -1,6 +1,6 @@
-using LaserAmazer.gui;
-using LaserAmazer.math;
-using LaserAmazer.render;
+using LaserAmazer.Gui;
+using LaserAmazer.Math;
+using LaserAmazer.Render;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace LaserAmazer
          */
         public static object[] Reflect(LaserModel laser)
         {
-            FindIntersects(laser, GameInstance.objectManager.getModels());
+            FindIntersects(laser, GameInstance.objectManager.GetModels());
 
             // If there exists at least one valid intersection
 
@@ -90,7 +90,7 @@ namespace LaserAmazer
         {
             intersects.Clear(); // Remove existing intersects from the list
             intersects.TrimExcess();
-            float slope = (float)Math.Tan(laser.GetAngle());
+            float slope = (float)System.Math.Tan(laser.GetAngle());
             coords = laser.GetCoords();
             int xDir = laser.xDir;
             int yDir = laser.yDir;
@@ -202,7 +202,7 @@ namespace LaserAmazer
                         {
                             bool inside = false;
 
-                            foreach (Model m in GameInstance.objectManager.getModels())
+                            foreach (Model m in GameInstance.objectManager.GetModels())
                             {
                                 if (UIUtils.checkIntersection(m.vertices, midpoint[0], midpoint[1]))
                                 {

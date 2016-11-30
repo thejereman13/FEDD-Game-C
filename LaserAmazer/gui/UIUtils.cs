@@ -1,4 +1,4 @@
-namespace LaserAmazer.gui
+namespace LaserAmazer.Gui
 {
     public class UIUtils
     {
@@ -10,7 +10,7 @@ namespace LaserAmazer.gui
          * @param nvert
          * @return
          */
-        public static bool pnpoly(float[] vertX, float[] vertY, float testX, float testY)
+        public static bool Pnpoly(float[] vertX, float[] vertY, float testX, float testY)
         {
             int nVert = vertX.Length, i, j;
             bool c = false;
@@ -48,7 +48,7 @@ namespace LaserAmazer.gui
                 yCoords[i] = coords[i * 3 + 1];
             }
 
-            return pnpoly(xCoords, yCoords, testX, testY);
+            return Pnpoly(xCoords, yCoords, testX, testY);
         }
 
         /**

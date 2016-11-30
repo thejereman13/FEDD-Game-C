@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class FloatColor
     {

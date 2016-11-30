@@ -1,4 +1,4 @@
-using LaserAmazer.render;
+using LaserAmazer.Render;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +10,7 @@ namespace LaserAmazer
 
         private LinkedList<LaserModel> laserList = new LinkedList<LaserModel>(); // Linked List of all lasers
         private object[] newL;
-        private readonly ReaderWriterLockSlim lock = new ReaderWriterLockSlim(); // ReadWriteLock for synchronizing the access of the list between threads
+        private readonly ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim(); // ReadWriteLock for synchronizing the access of the list between threads
         private LaserModel root; // Root node in the laser list
 
         /**
@@ -40,13 +40,17 @@ namespace LaserAmazer
          */
         public void RunReflections()
         {
-            lock.writeLock().lock(); // Lock access to the list
-
-            laserList.Clear(); // Clear and restart the list
-            laserList.AddLast(root);
-            calculateReflections(); // Run reflections
-
-            lock.writeLock().unlock(); // Unlock access
+            rwLock.EnterReadLock();
+            try
+            {
+                laserList.Clear(); // Clear and restart the list
+                laserList.AddLast(root);
+                CalculateReflections(); // Run reflections
+            }
+            finally
+            {
+                rwLock.ExitReadLock(); // Release the lock
+            }
         }
 
         /**
@@ -54,32 +58,39 @@ namespace LaserAmazer
          */
         public void Render()
         {
-            lock.readLock().lock(); // Locks access to the list
-
-            // Renders all lasers in the list
-            foreach (LaserModel m in laserList)
+            rwLock.EnterReadLock();
+            try
             {
-                m.Render();
+                // Renders all lasers in the list
+                foreach (LaserModel m in laserList)
+                {
+                    m.Render();
+                }
             }
-            lock.readLock().unlock(); // Unlocks the list
+            finally
+            {
+                rwLock.ExitReadLock(); // Release the lock
+            }
         }
 
         public void RotateStart(float angle, float xOffset, float yOffset)
         {
             try
             {
-                float[] c = laserList.First.GetCoords();
+                float[] c = laserList.First.Value.GetCoords();
                 float x = c[0] - xOffset, y = c[1] - yOffset;
                 float[] g = new float[] {
-                     (float)(x * Math.Cos(angle) - y * Math.Sin(angle) + xOffset),
-                     (float)(x * Math.Sin(angle) + y * Math.Cos(angle) + yOffset)
+                     (float)(x * System.Math.Cos(angle) - y * System.Math.Sin(angle) + xOffset),
+                     (float)(x * System.Math.Sin(angle) + y * System.Math.Cos(angle) + yOffset)
             };
 
-                laserList.First.SetCoords(g);
-                float ang = (float)(laserList.First.GetAngle() + angle) % ((float)Math.PI * 2f);
-                laserList.First.SetAngle(ang);
+                laserList.First.Value.SetCoords(g);
+                float ang = (float)(laserList.First.Value.GetAngle() + angle) % ((float)System.Math.PI * 2f);
+                laserList.First.Value.SetAngle(ang);
             }
-            catch (Exception e) { }
+            catch
+            {
+            }
         }
 
     }

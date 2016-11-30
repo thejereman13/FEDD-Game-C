@@ -1,7 +1,7 @@
 using OpenTK;
 using System;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class CreateModel
     {
@@ -33,7 +33,7 @@ namespace LaserAmazer.render
                 2, 3, 0
         };
 
-            return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, GameTexture.UNMOVEABLE_BOX));     //Add the model to the objectManager
+            return GameInstance.objectManager.AddModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, GameTexture.UNMOVEABLE_BOX));     //Add the model to the objectManager
         }
 
         public static Model CreateBox(float xOffset, float yOffset)
@@ -60,7 +60,7 @@ namespace LaserAmazer.render
                 0, 1, 2,
         };
 
-            return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.UNMOVEABLE_BOX));
+            return GameInstance.objectManager.AddModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.UNMOVEABLE_BOX));
         }
 
         public static MovableModel CreateMovableTriangle(float xOffset, float yOffset, float xSide, float ySide)
@@ -85,7 +85,7 @@ namespace LaserAmazer.render
                 0, 1, 2
         };
 
-            return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 3));
+            return (MovableModel)GameInstance.objectManager.AddModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 3));
         }
 
         /**
@@ -117,7 +117,7 @@ namespace LaserAmazer.render
             2, 3, 0
         };
 
-            return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));
+            return (MovableModel)GameInstance.objectManager.AddModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));
         }
 
         public static MovableModel CreateMovableBox(float xOffset, float yOffset)
@@ -156,7 +156,7 @@ namespace LaserAmazer.render
                 2, 3, 0
         };
 
-            return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, GameTexture.MOVEABLE_BOX));   //Add the model to the objectManager
+            return GameInstance.objectManager.AddModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, GameTexture.MOVEABLE_BOX));   //Add the model to the objectManager
         }
 
         public static MovableModel CreateMovableTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height)
@@ -181,7 +181,7 @@ namespace LaserAmazer.render
                 2, 3, 0
         };
 
-            return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));    //Add the model to the objectManager
+            return (MovableModel)GameInstance.objectManager.AddModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));    //Add the model to the objectManager
         }
 
         public static Wall CreateWall(float xOffset, float yOffset, float width, float height)
@@ -207,7 +207,7 @@ namespace LaserAmazer.render
         };
 
             Wall m = new Wall(vertices, texture, indices);
-            GameInstance.objectManager.addModel(m);
+            GameInstance.objectManager.AddModel(m);
 
             return m;
         }
@@ -289,9 +289,9 @@ namespace LaserAmazer.render
                 2, 3, 0
         };
 
-            LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, NewLaser(xOffset - .1f * (float)Math.Sin(angle), yOffset - height / 2f + .1f, angle, .1f));
+            LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, NewLaser(xOffset - .1f * (float)System.Math.Sin(angle), yOffset - height / 2f + .1f, angle, .1f));
             l.Rotate(-90 - 90 * side);
-            GameInstance.objectManager.addModel(l);
+            GameInstance.objectManager.AddModel(l);
 
             return l;
         }
@@ -304,7 +304,7 @@ namespace LaserAmazer.render
          * @param angle
          * @return
          */
-        public static LaserStart createLaserStart(float xOffset, float yOffset, int side)
+        public static LaserStart CreateLaserStart(float xOffset, float yOffset, int side)
         {
             float width = 1, height = 1;
             float[] vertices = new float[] {
@@ -328,7 +328,7 @@ namespace LaserAmazer.render
 
             LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, NewLaser(xOffset, yOffset - height / 2f, 0, .1f));
             l.Rotate(-90 - 90 * side);
-            GameInstance.objectManager.addModel(l);
+            GameInstance.objectManager.AddModel(l);
 
             return l;
         }
@@ -339,7 +339,7 @@ namespace LaserAmazer.render
          * @param yOffset
          * @return
          */
-        public static LaserStop createLaserStop(float xOffset, float yOffset)
+        public static LaserStop CreateLaserStop(float xOffset, float yOffset)
         {
             int size = 1;
 
@@ -364,7 +364,7 @@ namespace LaserAmazer.render
         };
 
             LaserStop l = new LaserStop(vertices, texture, indices, xOffset, yOffset);
-            GameInstance.objectManager.addModel(l);
+            GameInstance.objectManager.AddModel(l);
 
             return l;
         }

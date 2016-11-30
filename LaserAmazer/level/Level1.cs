@@ -1,6 +1,6 @@
-using LaserAmazer.render;
+using LaserAmazer.Render;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class Level1 : Level
     {
@@ -20,7 +20,7 @@ namespace LaserAmazer.level
 
             // Laser start/stop
             laserWrappers.Add(CreateModel.CreateLaserStart(-10f, -1f, 2, -45));
-            CreateModel.createLaserStop(7f, 9.9f);
+            CreateModel.CreateLaserStop(7f, 9.9f);
 
             m = CreateModel.CreateMovableBox(4, 0);
             m.Rotate(-30);

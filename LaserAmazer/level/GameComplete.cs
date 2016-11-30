@@ -1,8 +1,8 @@
-using LaserAmazer.gui;
-using LaserAmazer.render;
+using LaserAmazer.Gui;
+using LaserAmazer.Render;
 using System.Windows.Forms;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class GameComplete : Menu
     {

@@ -1,8 +1,8 @@
-using LaserAmazer.math;
-using LaserAmazer.render;
+using LaserAmazer.Math;
+using LaserAmazer.Render;
 using System;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class DemoLevel : Level
     {

@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
+using LaserAmazer.Gui;
+using LaserAmazer.Level;
+using LaserAmazer.Render;
 
 namespace LaserAmazer
 {
@@ -72,30 +75,31 @@ namespace LaserAmazer
         /**
          * Adds all specified elements to the Window's array and scene
          */
-        public void addElements()
+        public void AddElements()
         {
             //Add items here that need to be rendered every frame on all screens
-            if (GameInstance.getCurrentLevel() is Level && GameInstance.showTimer)
+            if (GameInstance.GetCurrentLevel() is Level.Level && GameInstance.showTimer)
             {
                 times = new Text(10.25f, -2f, "Time: ", GameColor.TEAL, 1);
                 elementList.Add(times);
             }
-            if (GameInstance.getCurrentLevel() is Level)
-                elementList.Add(new Text(10.2f, -1.5f, GameInstance.getCurrentLevel().getName(), GameColor.YELLOW, 1.4f));
-        }
-        public void updateTime()
-        {
-            if (GameInstance.getCurrentLevel() is Level)
-                times.setLabelstring("Time: " + (int)((Level)GameInstance.getCurrentLevel()).getElapsedTime());
+            if (GameInstance.GetCurrentLevel() is Level.Level)
+                elementList.Add(new Text(10.2f, -1.5f, GameInstance.GetCurrentLevel().getName(), GameColor.YELLOW, 1.4f));
         }
 
-        public void clearElements()
+        public void UpdateTime()
+        {
+            if (GameInstance.GetCurrentLevel() is Level.Level)
+                times.SetLabelstring("Time: " + (int)((Level.Level)GameInstance.GetCurrentLevel()).GetElapsedTime());
+        }
+
+        public void ClearElements()
         {
             elementList.Clear();
             elementList.TrimExcess();
         }
 
-        public void centerWindow()
+        public void CenterWindow()
         {
             //glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
         }
@@ -103,7 +107,7 @@ namespace LaserAmazer
         /**
          * @return close flag of the window
          */
-        public bool shouldClose()
+        public bool ShouldClose()
         {
             return false;
             //return glfwWindowShouldClose(window);
@@ -112,7 +116,7 @@ namespace LaserAmazer
         /**
          * Swaps the front and back buffers of the window
          */
-        public void swapBuffers()
+        public void SwapBuffers()
         {
             //glfwSwapBuffers(window);
         }
@@ -120,7 +124,7 @@ namespace LaserAmazer
         /**
          * Sets the error callback for the game
          */
-        public static void setCallbacks()
+        public static void SetCallbacks()
         {
             //glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
         }
@@ -129,7 +133,7 @@ namespace LaserAmazer
          * Sets the key callback to be checked
          * when glfwPollEvents is called
          */
-        private void setKeyCallback()
+        private void SetKeyCallback()
         {
             /*
             // Set key listener
@@ -187,7 +191,7 @@ namespace LaserAmazer
         /**
          * Sets the size callback for the window
          */
-        private void setWindowSizeCallback(int width, int height)
+        private void SetWindowSizeCallback(int width, int height)
         {   //Resize listener
             GL.Viewport(0, 0, width, height);   //Reset the viewport to the correct size
             this.width = width;
@@ -199,7 +203,7 @@ namespace LaserAmazer
          * Sets the mouse callback to be checked
          * when glfwPollEvents is called
          */
-        private void setMouseButtonCallback()
+        private void SetMouseButtonCallback()
         {
             /*
             // Mouse click listener
@@ -258,7 +262,7 @@ namespace LaserAmazer
         /**
          * @return width of the game window
          */
-        public int getWidth()
+        public int GetWidth()
         {
             return width;
         }
@@ -266,7 +270,7 @@ namespace LaserAmazer
         /**
          * @return height of the game window
          */
-        public int getHeight()
+        public int GetHeight()
         {
             return width;
         }
@@ -274,7 +278,7 @@ namespace LaserAmazer
         /**
          * @return true if the window is fullscreen
          */
-        public bool isFullscreen()
+        public bool IsFullscreen()
         {
             return fullscreen;
         }
@@ -282,7 +286,7 @@ namespace LaserAmazer
         /**
          * Updates input array and polls GLFW events
          */
-        public void update()
+        public void Update()
         {
             //glfwPollEvents();
         }
@@ -290,16 +294,16 @@ namespace LaserAmazer
         /**
          * Renders all UI elements in elementList
          */
-        public void renderElements()
+        public void RenderElements()
         {
             foreach (UIElement e in elementList)
-                e.render();
+                e.Render();
         }
 
         /**
          * Sets the taskbar and window icon for the game
          */
-        private void setWindowIcon()
+        private void SetWindowIcon()
         {
             /*
             GLFWImage image = GLFWImage.malloc();

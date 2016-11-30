@@ -1,9 +1,9 @@
-namespace LaserAmazer.gui
+namespace LaserAmazer.Gui
 {
     public interface UIElement
     {
 
-        void render();
+        void Render();
 
     }
 }

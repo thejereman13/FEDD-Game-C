@@ -1,6 +1,7 @@
+using LaserAmazer.Render;
 using System;
 
-namespace LaserAmazer.gui
+namespace LaserAmazer.Gui
 {
     public class CreateUI
     {
@@ -13,7 +14,7 @@ namespace LaserAmazer.gui
          * @param width
          * @param r
          */
-        public static Button createButton(float xOffset, float yOffset, float width, float height, Action r, GameFont f)
+        public static Button CreateButton(float xOffset, float yOffset, float width, float height, Action r, GameFont f)
         {
             // Vertices for a button
             float[] vertices = new float[] {
@@ -21,31 +22,32 @@ namespace LaserAmazer.gui
 				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
 				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
 				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
-		};
+		    };
 
             float[] texture = new float[] {
                 0, 0, // TOP LEFT
 				1, 0, // TOP RIGHT
 				1, 1, // BOTTOM RIGHT
 				0, 1, // BOTTOM LEFT
-		};
+		    };
 
             int[] indices = new int[] {
                 0, 1, 2,
                 2, 3, 0
-        };
+            };
 
             return new Button(vertices, texture, indices, r, f, xOffset, yOffset, height, width);
         }
+
         /**
-         * 
-         * @param xOffset
-         * @param yOffset
-         * @param width
-         * @param height
-         * @param r
-         * @return
-         */
+        * 
+        * @param xOffset
+        * @param yOffset
+        * @param width
+        * @param height
+        * @param r
+        * @return
+        */
         public static Button createButton(float xOffset, float yOffset, float width, float height, Action r)
         {
             // Vertices for a button
@@ -54,19 +56,20 @@ namespace LaserAmazer.gui
 				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
 				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
 				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
-		};
+		    };
 
             float[] texture = new float[] {
                 0, 0, // TOP LEFT
 				1, 0, // TOP RIGHT
 				1, 1, // BOTTOM RIGHT
 				0, 1, // BOTTOM LEFT
-		};
+		    };
 
             int[] indices = new int[] {
                 0, 1, 2,
                 2, 3, 0
-        };
+            };
+
             return new Button(vertices, texture, indices, r, xOffset, yOffset, height, width);
         }
 
@@ -88,7 +91,7 @@ namespace LaserAmazer.gui
 
             for (int i = 0; i < rs.Length; i++)
             {
-                d.addButton(createButton(xOffset, yOffset, width, height, rs[i], fs[i]));
+                d.AddButton(CreateButton(xOffset, yOffset, width, height, rs[i], fs[i]));
             }
 
             return d;
@@ -101,19 +104,19 @@ namespace LaserAmazer.gui
 				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
 				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
 				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
-		};
+		    };
 
             float[] texture = new float[] {
                 0, 0, // TOP LEFT
 				1, 0, // TOP RIGHT
 				1, 1, // BOTTOM RIGHT
 				0, 1, // BOTTOM LEFT
-		};
+		    };
 
             int[] indices = new int[] {
                 0, 1, 2,
                 2, 3, 0
-        };
+            };
 
             return new Dropdown(vertices, texture, indices, f, xOffset, yOffset, height, width);
         }

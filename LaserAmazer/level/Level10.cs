@@ -1,6 +1,7 @@
-using LaserAmazer.render;
+using LaserAmazer.Math;
+using LaserAmazer.Render;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class Level10 : Level
     {
@@ -11,9 +12,9 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
-            base.renderObjects();
+            base.RenderObjects();
 
             // Inner walls
             CreateModel.CreateWall(-9.7f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
@@ -31,7 +32,7 @@ namespace LaserAmazer.level
             LaserStart start = CreateModel.CreateLaserStart(9.3f, 9.3f, 3, -10);
             laserWrappers.Add(start);
 
-            CreateModel.createLaserStop(-9f, 9.3f);
+            CreateModel.CreateLaserStop(-9f, 9.3f);
 
             // MovingBoxes
             MovingBox movingBox1 = new MovingBox(2.85f, 2f, 123, 1f, 0f);
@@ -42,7 +43,7 @@ namespace LaserAmazer.level
             movingBoxes = new MovingBox[] { movingBox1, movingBox2 };
 
             CreateModel.CreateMovableBox(4.05f, -5.925f);
-            CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
+            CreateModel.CreateMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
             CreateModel.CreateBox(4f, 0f);
 
             Model tri1 = CreateModel.CreateTriangle(-4f, -4f, -1f, -2f);
@@ -53,11 +54,11 @@ namespace LaserAmazer.level
             Model model;
             for (int i = 0; i < 7; i++)
             {
-                int x = randomInt(1, 9);
-                int y = randomInt(2, 8);
+                int x = MathExtension.RandomInt(1, 9);
+                int y = MathExtension.RandomInt(2, 8);
 
                 model = CreateModel.CreateMovableTriangle(x, y, 1, 1);
-                randomRotate(model);
+                RandomRotate(model);
             }
 
             model = CreateModel.CreateMovableTriangle(-6f, -8f, 1f, 1f);
@@ -66,11 +67,11 @@ namespace LaserAmazer.level
             isRendered = true;
         }
 
-        public override void logicLoop()
+        public override void LogicLoop()
         {
             if (isRendered)
             {
-                base.logicLoop();
+                base.LogicLoop();
 
                 foreach (MovingBox mBox in movingBoxes)
                 {

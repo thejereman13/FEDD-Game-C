@@ -7,11 +7,12 @@
     <ProjectGuid>{CF6465B7-BF42-4D5A-B8C7-D640D6922F1A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FEDDGame</RootNamespace>
-    <AssemblyName>FEDDGame</AssemblyName>
+    <RootNamespace>LaserAmazer</RootNamespace>
+    <AssemblyName>LaserAmazer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>FEDDGame.Program</StartupObject>
+    <StartupObject>LaserAmazer.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -72,60 +72,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="math\MathExtension.cs" />
+    <Compile Include="Math\MathExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LaserAmazerLaunch.cs" />
     <Compile Include="GameInstance.cs" />
-    <Compile Include="gui\Button.cs" />
-    <Compile Include="gui\CreateUI.cs" />
-    <Compile Include="gui\Dropdown.cs" />
-    <Compile Include="gui\IClickable.cs" />
-    <Compile Include="gui\Text.cs" />
-    <Compile Include="gui\UIElement.cs" />
-    <Compile Include="gui\UIUtils.cs" />
+    <Compile Include="Gui\Button.cs" />
+    <Compile Include="Gui\CreateUI.cs" />
+    <Compile Include="Gui\Dropdown.cs" />
+    <Compile Include="Gui\IClickable.cs" />
+    <Compile Include="Gui\Text.cs" />
+    <Compile Include="Gui\UIElement.cs" />
+    <Compile Include="Gui\UIUtils.cs" />
     <Compile Include="LaserWrapper.cs" />
-    <Compile Include="level\DemoLevel.cs" />
-    <Compile Include="level\GameComplete.cs" />
-    <Compile Include="level\Level.cs" />
-    <Compile Include="level\Level1.cs" />
-    <Compile Include="level\Level10.cs" />
-    <Compile Include="level\Level2.cs" />
-    <Compile Include="level\Level3.cs" />
-    <Compile Include="level\Level4.cs" />
-    <Compile Include="level\Level5.cs" />
-    <Compile Include="level\Level6.cs" />
-    <Compile Include="level\Level7.cs" />
-    <Compile Include="level\Level8.cs" />
-    <Compile Include="level\Level9.cs" />
-    <Compile Include="level\MainMenu.cs" />
-    <Compile Include="level\Menu.cs" />
-    <Compile Include="level\OptionsMenu.cs" />
-    <Compile Include="level\Scene.cs" />
+    <Compile Include="Level\DemoLevel.cs" />
+    <Compile Include="Level\GameComplete.cs" />
+    <Compile Include="Level\Level.cs" />
+    <Compile Include="Level\Level1.cs" />
+    <Compile Include="Level\Level10.cs" />
+    <Compile Include="Level\Level2.cs" />
+    <Compile Include="Level\Level3.cs" />
+    <Compile Include="Level\Level4.cs" />
+    <Compile Include="Level\Level5.cs" />
+    <Compile Include="Level\Level6.cs" />
+    <Compile Include="Level\Level7.cs" />
+    <Compile Include="Level\Level8.cs" />
+    <Compile Include="Level\Level9.cs" />
+    <Compile Include="Level\MainMenu.cs" />
+    <Compile Include="Level\Menu.cs" />
+    <Compile Include="Level\OptionsMenu.cs" />
+    <Compile Include="Level\Scene.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="ReflectionCalculation.cs" />
-    <Compile Include="render\Alignment.cs" />
-    <Compile Include="render\Camera.cs" />
-    <Compile Include="render\CreateModel.cs" />
-    <Compile Include="render\FloatColor.cs" />
-    <Compile Include="render\GameColor.cs" />
-    <Compile Include="render\GameFont.cs" />
-    <Compile Include="render\GameTexture.cs" />
-    <Compile Include="render\LaserModel.cs" />
-    <Compile Include="render\LaserStart.cs" />
-    <Compile Include="render\LaserStop.cs" />
-    <Compile Include="render\Model.cs" />
-    <Compile Include="render\MovableModel.cs" />
-    <Compile Include="render\MovingBox.cs" />
-    <Compile Include="render\Shader.cs" />
-    <Compile Include="render\Texture.cs" />
-    <Compile Include="render\Wall.cs" />
+    <Compile Include="Render\Alignment.cs" />
+    <Compile Include="Render\Camera.cs" />
+    <Compile Include="Render\CreateModel.cs" />
+    <Compile Include="Render\FloatColor.cs" />
+    <Compile Include="Render\GameColor.cs" />
+    <Compile Include="Render\GameFont.cs" />
+    <Compile Include="Render\GameTexture.cs" />
+    <Compile Include="Render\LaserModel.cs" />
+    <Compile Include="Render\LaserStart.cs" />
+    <Compile Include="Render\LaserStop.cs" />
+    <Compile Include="Render\Model.cs" />
+    <Compile Include="Render\MovableModel.cs" />
+    <Compile Include="Render\MovingBox.cs" />
+    <Compile Include="Render\Shader.cs" />
+    <Compile Include="Render\Texture.cs" />
+    <Compile Include="Render\Wall.cs" />
     <Compile Include="SaveGame.cs" />
     <Compile Include="State.cs" />
     <Compile Include="Window.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />

@@ -1,4 +1,4 @@
-﻿namespace FEDDGame
+﻿namespace LaserAmazer
 {
     partial class Form1
     {

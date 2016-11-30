@@ -1,3 +1,4 @@
+using LaserAmazer.Render;
 using System.Collections.Generic;
 
 namespace LaserAmazer
@@ -14,7 +15,7 @@ namespace LaserAmazer
          * @param Model
          *            m
          */
-        public Model addModel(Model m)
+        public Model AddModel(Model m)
         {
             addModels.Add(m);
             return m;
@@ -24,12 +25,12 @@ namespace LaserAmazer
          * Returns the models Arraylist
          * @return
          */
-        public List<Model> getModels()
+        public List<Model> GetModels()
         {
             return models;
         }
 
-        public void setModels(List<Model> models)
+        public void SetModels(List<Model> models)
         {
             ObjectManager.models = models;
         }
@@ -37,7 +38,7 @@ namespace LaserAmazer
         /**
          * Flushes the buffer List into the primary Lists
          */
-        public void updateModels()
+        public void UpdateModels()
         {
             models.AddRange(addModels);
             addModels.Clear();
@@ -59,7 +60,7 @@ namespace LaserAmazer
          * 
          * @param m
          */
-        public void removeModel(Model m)
+        public void RemoveModel(Model m)
         {
             models.Remove(m);
         }
@@ -70,7 +71,7 @@ namespace LaserAmazer
          * @param index
          * @return
          */
-        public Model getModel(int index)
+        public Model GetModel(int index)
         {
             return models[index];
         }
@@ -78,15 +79,15 @@ namespace LaserAmazer
         /**
          * Calls the render() function on all models and lasers
          */
-        public void renderAll()
+        public void RenderAll()
         {
-            for (int i = 0; i < getModels().Count; i++)
+            for (int i = 0; i < GetModels().Count; i++)
             {
-                models[i].render();
+                models[i].Render();
             }
         }
 
-        public void clearAll()
+        public void ClearAll()
         {
             models.Clear();
         }

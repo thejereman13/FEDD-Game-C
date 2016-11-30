@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LaserAmazer.math
+namespace LaserAmazer.Math
 {
     class MathExtension
     {
@@ -12,12 +12,12 @@ namespace LaserAmazer.math
 
         public static double ToRadians(double val)
         {
-            return (Math.PI / 180) * val;
+            return (System.Math.PI / 180) * val;
         }
 
         public static double Hypotenuse(float a, float b)
         {
-            return Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
+            return System.Math.Sqrt(System.Math.Pow(a, 2) + System.Math.Pow(b, 2));
         }
     }
 }

@@ -1,6 +1,7 @@
-using LaserAmazer.render;
+using LaserAmazer.Math;
+using LaserAmazer.Render;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class Level3 : Level
     {
@@ -11,9 +12,9 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
-            base.renderObjects();
+            base.RenderObjects();
 
             // Inner bounds
             CreateModel.CreateWall(-4f, 2f, 12f, .25f);
@@ -25,7 +26,7 @@ namespace LaserAmazer.level
 
             laserWrappers.Add(CreateModel.CreateLaserStart(-10f, -1f, 2, (float)MathExtension.ToRadians(-45)));
 
-            Model laserStop = CreateModel.createLaserStop(-9.7f, 7f);
+            Model laserStop = CreateModel.CreateLaserStop(-9.7f, 7f);
             laserStop.Rotate((float)MathExtension.ToRadians(90));
 
             movingBox = new MovingBox(2.85f, 2.6f, 123, 0f, 1f);
@@ -33,21 +34,21 @@ namespace LaserAmazer.level
             Model model;
             for (int i = 0; i < 7; i++)
             {
-                int x = randomInt(1, 9);
-                int y = randomInt(2, 8);
+                int x = MathExtension.RandomInt(1, 9);
+                int y = MathExtension.RandomInt(2, 8);
 
                 model = CreateModel.CreateMovableBox(x, y);
-                randomRotate(model);
+                RandomRotate(model);
             }
 
             isRendered = true;
         }
 
-        public override void logicLoop()
+        public override void LogicLoop()
         {
             if (isRendered)
             {
-                base.logicLoop();
+                base.LogicLoop();
 
                 movingBox.LogicLoop();
             }

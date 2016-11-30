@@ -1,7 +1,7 @@
 using OpenTK.Graphics.OpenGL4;
 using System;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class Model
     {
@@ -198,11 +198,11 @@ namespace LaserAmazer.render
         /// <param name="angle"></param>
         public void Rotate(float angle)
         {
-            angle *= ((float)Math.PI / 180f);
+            angle *= ((float)System.Math.PI / 180f);
             for (int i = 0; i < sideCount; i++)
             {
-                float newX = (float)(xOffset + (this.vertices[i * 3] - xOffset) * (float)Math.Cos(angle) - (this.vertices[i * 3 + 1] - yOffset) * (float)Math.Sin(angle));
-                float newY = (float)(yOffset + (this.vertices[i * 3] - xOffset) * (float)Math.Sin(angle) + (this.vertices[i * 3 + 1] - yOffset) * (float)Math.Cos(angle));
+                float newX = (float)(xOffset + (this.vertices[i * 3] - xOffset) * (float)System.Math.Cos(angle) - (this.vertices[i * 3 + 1] - yOffset) * (float)System.Math.Sin(angle));
+                float newY = (float)(yOffset + (this.vertices[i * 3] - xOffset) * (float)System.Math.Sin(angle) + (this.vertices[i * 3 + 1] - yOffset) * (float)System.Math.Cos(angle));
                 vertices[i * 3] = newX;
                 vertices[i * 3 + 1] = newY;
             }

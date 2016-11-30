@@ -1,10 +1,8 @@
-using LaserAmazer.gui;
-using LaserAmazer.math;
-using LaserAmazer.render;
-using System;
+using LaserAmazer.Gui;
+using LaserAmazer.Render;
 using System.Collections.Generic;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public abstract class Level : Scene
     {
@@ -36,14 +34,14 @@ namespace LaserAmazer.level
             foreach (Scene level in GameInstance.scenes)
             {
                 if (level is Level && GameInstance.scenes.IndexOf(level) <= GameInstance.latestLevel)
-                    du.addButton(CreateUI.createButton(-12f, 8f, 3f, 1, () =>
+                    du.AddButton(CreateUI.CreateButton(-12f, 8f, 3f, 1, () =>
                     {
                         GameInstance.SetLevel(GameInstance.scenes.IndexOf(level));
                     }, new GameFont(level.getName(), GameColor.RED)));
             }
             elementList.Add(du);
 
-            elementList.Add(CreateUI.createButton(-12f, 9.25f, 3, 1, () =>
+            elementList.Add(CreateUI.CreateButton(-12f, 9.25f, 3, 1, () =>
             {
                 GameInstance.SetLevel(0);
             }, new GameFont("Main Menu", GameColor.RED)));
@@ -58,13 +56,13 @@ namespace LaserAmazer.level
         protected void RandomRotate(Model model)
         {
             bool rotate = false;
-            if (MathExtension.RandomInt(0, 1) < 0.5)
+            if (Math.MathExtension.RandomInt(0, 1) < 0.5)
                 rotate = true;
 
             if (rotate)
             {
-                float r = (float)MathExtension.RandomInt(0, 1);
-                model.Rotate(r < .5f ? (-(float)Math.PI / 3f) : ((float)Math.PI / 6f));
+                float r = (float)Math.MathExtension.RandomInt(0, 1);
+                model.Rotate(r < .5f ? (-(float)System.Math.PI / 3f) : ((float)System.Math.PI / 6f));
             }
         }
 

@@ -1,7 +1,8 @@
-
+using LaserAmazer.Gui;
+using LaserAmazer.Render;
 using System.Windows.Forms;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class MainMenu : Menu
     {
@@ -11,27 +12,27 @@ namespace LaserAmazer.level
 
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
             elementList.Clear();
-            elementList.Add(CreateUI.createButton(0, 1, 3, 1.25f, () =>
+            elementList.Add(CreateUI.CreateButton(0, 1, 3, 1.25f, () =>
             {
-                GameInstance.setLevel(GameInstance.currentLevel);
+                GameInstance.SetLevel(GameInstance.currentLevel);
             }, new GameFont("Continue", GameColor.RED)));
 
-            elementList.Add(CreateUI.createButton(0, -0.5f, 3, 1.25f, () =>
+            elementList.Add(CreateUI.CreateButton(0, -0.5f, 3, 1.25f, () =>
             {
                 GameInstance.latestLevel = 2;
-                GameInstance.setLevel(2);
+                GameInstance.SetLevel(2);
             }, new GameFont("New Game", GameColor.RED)));
 
-            elementList.Add(CreateUI.createButton(0, -2f, 3, 1.25f, () =>
+            elementList.Add(CreateUI.CreateButton(0, -2f, 3, 1.25f, () =>
             {
-                GameInstance.setLevel(1);
+                GameInstance.SetLevel(1);
             }, new GameFont("Options", GameColor.RED)));
-            elementList.Add(CreateUI.createButton(0, -3.5f, 3, 1.25f, () =>
+            elementList.Add(CreateUI.CreateButton(0, -3.5f, 3, 1.25f, () =>
             {
-                SaveData.writeData();
+                SaveGame.writeData();
                 Application.Exit();
             }, new GameFont("Quit", GameColor.RED)));
 

@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class GameFont
     {
@@ -23,7 +23,7 @@ namespace LaserAmazer.render
             {
                 setUpTextures();
             }
-            catch (Exception e)
+            catch
             {
             }
         }
@@ -52,7 +52,7 @@ namespace LaserAmazer.render
             GL.BindTexture(TextureTarget.Texture2D, 0); // Unbind the texture
         }
 
-        public void renderString(string str, float x, float y, float characterWidth)
+        public void RenderString(string str, float x, float y, float characterWidth)
         {
             GameInstance.shader.Unbind();
 
@@ -82,7 +82,7 @@ namespace LaserAmazer.render
 
             GL.Color4(color.red(), color.green(), color.blue(), 1f); // Set Font color
 
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
             // Iterate over all the characters in the string.
             for (int i = 0; i < str.Length; i++)
@@ -136,7 +136,7 @@ namespace LaserAmazer.render
                     break;
             }
 
-            renderString(str, x, y, characterWidth);
+            RenderString(str, x, y, characterWidth);
         }
 
         public int getFontTexture()
@@ -148,7 +148,7 @@ namespace LaserAmazer.render
         {
             return renderStr;
         }
-        public void setRenderString(string str)
+        public void SetRenderString(string str)
         {
             renderStr = str;
         }

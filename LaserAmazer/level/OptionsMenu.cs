@@ -1,9 +1,9 @@
-using LaserAmazer.gui;
-using LaserAmazer.render;
+using LaserAmazer.Gui;
+using LaserAmazer.Render;
 using System;
 using System.Collections.Generic;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public class OptionsMenu : Menu
     {
@@ -110,13 +110,13 @@ namespace LaserAmazer.level
             {
                 foreach (UIElement e in gameList)
                 {
-                    e.render();
+                    e.Render();
                 }
             }
             else if (display == 1)
             {
                 foreach (UIElement e in graphicsList)
-                    e.render();
+                    e.Render();
             }
         }
 
@@ -127,14 +127,14 @@ namespace LaserAmazer.level
             {
                 if (e is IClickable)
                 {
-                    ((IClickable)e).checkClick(mouseX, mouseY);
+                    ((IClickable)e).CheckClick(mouseX, mouseY);
                 }
             }
             foreach (UIElement e in graphicsList)
             {
                 if (e is IClickable)
                 {
-                    ((IClickable)e).checkClick(mouseX, mouseY);
+                    ((IClickable)e).CheckClick(mouseX, mouseY);
                 }
             }
         }

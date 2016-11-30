@@ -1,6 +1,7 @@
+using LaserAmazer.Render;
 using System.Collections.Generic;
 
-namespace LaserAmazer.gui
+namespace LaserAmazer.Gui
 {
     public class Dropdown : Button
     {
@@ -17,15 +18,15 @@ namespace LaserAmazer.gui
          * Adds the button passed and attaches another callback for this dropdown
          * @param b
          */
-        public void addButton(Button b)
+        public void AddButton(Button b)
         {
-            b.addCallback(() =>
+            b.AddCallback(() =>
             {
-                choiceClicked();
+                ChoiceClicked();
             });
 
             length -= (b.height + .05f);
-            b.move(0, length, 0);
+            b.Move(0, length, 0);
             options.AddLast(b);
         }
 
@@ -33,32 +34,32 @@ namespace LaserAmazer.gui
         {
             foreach (Button but in b)
             {
-                but.addCallback(() =>
+                but.AddCallback(() =>
                 {
-                    choiceClicked();
+                    ChoiceClicked();
                 });
 
                 length -= (but.height / 2f + .05f);
-                but.move(0, length, 0);
+                but.Move(0, length, 0);
                 options.AddLast(but);
             }
         }
 
-        public new bool checkClick(float xPos, float yPos)
+        public new bool CheckClick(float xPos, float yPos)
         {
             if (open)
             {
                 // Check click on all buttons in the dropdown first
                 foreach (Button b in options)
                 {
-                    b.checkClick(xPos, yPos);
+                    b.CheckClick(xPos, yPos);
                 }
             }
 
             // Then check if the dropdown was clicked
-            if (UIUtils.pnpoly(base.xCoords, base.yCoords, xPos * GameInstance.window.ratio, yPos))
+            if (UIUtils.Pnpoly(base.xCoords, base.yCoords, xPos * GameInstance.window.ratio, yPos))
             {
-                choiceClicked();
+                ChoiceClicked();
                 return true;
             }
             else
@@ -70,7 +71,7 @@ namespace LaserAmazer.gui
         /**
          * Toggles whether the Dropdown is open.
          */
-        public void choiceClicked()
+        public void ChoiceClicked()
         {
             open = !open;
         }
@@ -78,15 +79,15 @@ namespace LaserAmazer.gui
         /**
          * Renders everything necessary for a Dropdown menu.
          */
-        public new void render()
+        public new void Render()
         {
-            base.render();
+            base.Render();
 
             if (open)
             {
                 foreach (Button b in options)
                 {
-                    b.render();
+                    b.Render();
                 }
             }
         }

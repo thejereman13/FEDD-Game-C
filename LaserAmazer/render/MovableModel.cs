@@ -1,6 +1,7 @@
+using LaserAmazer.Gui;
 using System;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class MovableModel : Model, IClickable
     {
@@ -11,20 +12,19 @@ namespace LaserAmazer.render
         private Action callback = null;
         public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides) : base(vertices, tCoords, indices, sides, "moveablebox.png")
         {
-            adjustOffset(xOffset, yOffset);
+            AdjustOffset(xOffset, yOffset);
         }
         public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides, String tex) : base(vertices, tCoords, indices, sides, tex)
         {
-            adjustOffset(xOffset, yOffset);
+            AdjustOffset(xOffset, yOffset);
         }
 
-        public void setCallback(Action r)
+        public void SetCallback(Action r)
         {
-            this.callback = r;
-
+            callback = r;
         }
 
-        private void adjustOffset(float xOffset, float yOffset)
+        private void AdjustOffset(float xOffset, float yOffset)
         {
             float[] coords = new float[3 * base.sideCount];
             for (int i = 0; i < this.sideCount; i++)
@@ -40,23 +40,23 @@ namespace LaserAmazer.render
                 coords[i * 3 + 2] = 0;
             }
 
-            splitCoords(coords);
+            SplitCoords(coords);
             base.SetVertices(coords);
             base.xOffset = xOffset;
             base.yOffset = yOffset;
         }
 
-        private void splitCoords(float[] coords)
+        private void SplitCoords(float[] coords)
         {
-            this.xCoords = new float[sideCount];
-            this.yCoords = new float[sideCount];
-            for (int i = 0; i < this.sideCount; i++)
+            xCoords = new float[sideCount];
+            yCoords = new float[sideCount];
+            for (int i = 0; i < sideCount; i++)
             {
-                this.xCoords[i] = coords[i * 3];
+                xCoords[i] = coords[i * 3];
             }
-            for (int i = 0; i < this.sideCount; i++)
+            for (int i = 0; i < sideCount; i++)
             {
-                this.yCoords[i] = coords[i * 3 + 1];
+                yCoords[i] = coords[i * 3 + 1];
             }
         }
 
@@ -66,19 +66,17 @@ namespace LaserAmazer.render
          * @param yPos
          * @return
          */
-        public bool checkClick(float xPos, float yPos)
+        public bool CheckClick(float xPos, float yPos)
         {
-            splitCoords(base.vertices);
-            if (UIUtils.pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos))
+            SplitCoords(base.vertices);
+            if (UIUtils.Pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos))
             {
                 if (callback != null)
                     callback.Invoke();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /**
@@ -86,7 +84,7 @@ namespace LaserAmazer.render
          * @param xPos
          * @param yPos
          */
-        public void followCursor(float xPos, float yPos)
+        public void FollowCursor(float xPos, float yPos)
         {
             if (xPos > 10)
                 xPos = 10;
@@ -96,7 +94,7 @@ namespace LaserAmazer.render
                 yPos = 10;
             if (yPos < -10)
                 yPos = -10;
-            adjustOffset(xPos * GameInstance.window.ratio, yPos);
+            AdjustOffset(xPos * GameInstance.window.ratio, yPos);
         }
 
     }

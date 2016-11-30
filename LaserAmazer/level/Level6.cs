@@ -1,4 +1,6 @@
-namespace LaserAmazer.level
+using LaserAmazer.Render;
+
+namespace LaserAmazer.Level
 {
     public class Level6 : Level
     {
@@ -7,30 +9,30 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
-            base.renderObjects();
+            base.RenderObjects();
 
             // Inner bounds
-            CreateModel.createWall(0f, -5f, 8f, .25f);
-            CreateModel.createWall(-1f, -9f, .25f, 1.5f);
-            CreateModel.createWall(1f, -9f, .25f, 1.5f);
+            CreateModel.CreateWall(0f, -5f, 8f, .25f);
+            CreateModel.CreateWall(-1f, -9f, .25f, 1.5f);
+            CreateModel.CreateWall(1f, -9f, .25f, 1.5f);
 
             // Laser start/stop
-            LaserStart laserStart = CreateModel.createLaserStart(-9f, 9f, 3);
-            laserStart.rotate(45);
+            LaserStart laserStart = CreateModel.CreateLaserStart(-9f, 9f, 3);
+            laserStart.Rotate(45);
             laserWrappers.Add(laserStart);
 
-            LaserStop laserStop = CreateModel.createLaserStop(0f, -9.5f);
-            laserStop.rotate(180.1f);
+            LaserStop laserStop = CreateModel.CreateLaserStop(0f, -9.5f);
+            laserStop.Rotate(180.1f);
 
             // Moveables
-            CreateModel.createMovableBox(4.05f, -5.925f);
-            CreateModel.createMovableTrapezoid(-4f, 5f, 1.5f, 1f, 1f);
-            CreateModel.createMovableTrapezoid(-4f, 8f, 1.5f, 1, 1f);
+            CreateModel.CreateMovableBox(4.05f, -5.925f);
+            CreateModel.CreateMovableTrapezoid(-4f, 5f, 1.5f, 1f, 1f);
+            CreateModel.CreateMovableTrapezoid(-4f, 8f, 1.5f, 1, 1f);
 
-            CreateModel.createMovableTriangle(4f, 5f, 1f, 1f);
-            CreateModel.createMovableTriangle(0f, 5f, 1f, 1f);
+            CreateModel.CreateMovableTriangle(4f, 5f, 1f, 1f);
+            CreateModel.CreateMovableTriangle(0f, 5f, 1f, 1f);
 
             // Stationary Models
             Model box;
@@ -38,8 +40,8 @@ namespace LaserAmazer.level
             {
                 for (int j = 0 + i; j < 20 - i * 2; j += 2)
                 {
-                    box = CreateModel.createBox(-9f + j, i * 2);
-                    box.rotate(45);
+                    box = CreateModel.CreateBox(-9f + j, i * 2);
+                    box.Rotate(45);
                 }
             }
         }

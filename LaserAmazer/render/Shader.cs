@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.IO;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class Shader
     {
@@ -103,7 +103,7 @@ namespace LaserAmazer.render
                     return input.ReadToEnd();
                 }
             }
-            catch (Exception e)
+            catch
             {
             }
 

@@ -1,8 +1,8 @@
-using LaserAmazer.gui;
+using LaserAmazer.Gui;
 using System;
 using System.Collections.Generic;
 
-namespace LaserAmazer.level
+namespace LaserAmazer.Level
 {
     public abstract class Scene
     {
@@ -28,7 +28,7 @@ namespace LaserAmazer.level
             {
                 foreach (UIElement e in elementList)
                 {
-                    e.render();
+                    e.Render();
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace LaserAmazer.level
             {
                 if (e is IClickable)
                 {
-                    ((IClickable)e).checkClick(mouseX, mouseY);
+                    ((IClickable)e).CheckClick(mouseX, mouseY);
                 }
             }
         }

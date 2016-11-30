@@ -4,8 +4,8 @@ using System.Threading;
 using OpenTK;
 using System;
 using System.Diagnostics;
-using LaserAmazer.level;
-using LaserAmazer.render;
+using LaserAmazer.Level;
+using LaserAmazer.Render;
 
 namespace LaserAmazer
 {
@@ -110,7 +110,7 @@ namespace LaserAmazer
             Matrix4d scale = Matrix4d.CreateTranslation(new Vector3d(100, 0, 0));   //Might still need a scale() method
             Matrix4d target = new Matrix4d();
 
-            Camera camera = new Camera(window.getWidth(), window.getHeight());
+            Camera camera = new Camera(window.GetWidth(), window.GetHeight());
             camera.setPosition(new Vector3d(-100, 0, 0));
 
             shader = new Shader("shader");
@@ -127,9 +127,9 @@ namespace LaserAmazer
             new Thread(() => LogicLoop()).Start(); // Run the logic in a separate thread
 
             //glfwSetWindowSize(window.window, 1200, 800);
-            window.centerWindow(); // Center window on screen
+            window.CenterWindow(); // Center window on screen
                                    // Poll window while window isn't about to close
-            while (!window.shouldClose())
+            while (!window.ShouldClose())
             {
                 canRender = false;
 
@@ -149,7 +149,7 @@ namespace LaserAmazer
                     canRender = true;
                     target = scale;
 
-                    window.update();
+                    window.Update();
 
                     if (frameTime >= 1.0)
                         frameTime = 0;
@@ -166,9 +166,9 @@ namespace LaserAmazer
                         gameState = true;
                         shader.Bind();
                         shader.UpdateUniforms(camera, target);
-                        objectManager.renderAll();
-                        window.updateTime();
-                        window.renderElements();
+                        objectManager.RenderAll();
+                        window.UpdateTime();
+                        window.RenderElements();
                         GetCurrentLevel().RenderLoop();
                     }
                     else if (state.Equals(State.LEVEL_COMPLETE))
@@ -182,9 +182,9 @@ namespace LaserAmazer
 
                             shader.Bind();
                             shader.UpdateUniforms(camera, target);
-                            objectManager.renderAll();
+                            objectManager.RenderAll();
 
-                            window.renderElements();
+                            window.RenderElements();
 
                             // Add dark rectangle to make text more readable
                             shader.Unbind();
@@ -222,12 +222,12 @@ namespace LaserAmazer
                         if (fadeN > 0)
                         {
                             fadeN -= 2.5f;
-                            GL.Color4(clearColor.red(), clearColor.blue(), clearColor.green(), (float)Math.Sin(fadeN));
+                            GL.Color4(clearColor.red(), clearColor.blue(), clearColor.green(), (float)System.Math.Sin(fadeN));
                             GL.Rect(-10f, -10f, 10f, 10f);
                         }
                     }
 
-                    window.swapBuffers(); // Swap the render buffers
+                    window.SwapBuffers(); // Swap the render buffers
                 }
 
             }
@@ -237,9 +237,9 @@ namespace LaserAmazer
         private void LogicLoop()
         {
             Thread.CurrentThread.Name = "Logic";
-            int timing = (int)Math.Round(1f / 60 * 1000f);  // Get the number of milliseconds between frames based on 60 times a second
+            int timing = (int)System.Math.Round(1f / 60 * 1000f);  // Get the number of milliseconds between frames based on 60 times a second
 
-            while (!window.shouldClose())
+            while (!window.ShouldClose())
             {
                 if (!gameState) continue;
 
@@ -340,11 +340,11 @@ namespace LaserAmazer
         {
             if (levNum < scenes.Count && !hasLevel)
             {
-                objectManager.clearAll();
-                window.clearElements();
-                window.addElements();
+                objectManager.ClearAll();
+                window.ClearElements();
+                window.AddElements();
                 GetCurrentLevel().RenderObjects(); // Add all objects to the scene from the level class
-                objectManager.updateModels();
+                objectManager.UpdateModels();
                 hasLevel = true;
             }
             else if (!hasLevel)

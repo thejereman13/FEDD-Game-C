@@ -1,4 +1,7 @@
-namespace LaserAmazer.level
+using LaserAmazer.Math;
+using LaserAmazer.Render;
+
+namespace LaserAmazer.Level
 {
     public class Level9 : Level
     {
@@ -10,54 +13,54 @@ namespace LaserAmazer.level
         {
         }
 
-        public override void renderObjects()
+        public override void RenderObjects()
         {
-            base.renderObjects();
+            base.RenderObjects();
 
             // Walls
             {
                 // Vertical walls between moving boxes
                 for (int i = -8; i <= 8; i += 2)
                 {
-                    CreateModel.createWall(i, -3f, .25f, 5f);
-                    CreateModel.createWall(i, 3f, .25f, 5f);
+                    CreateModel.CreateWall(i, -3f, .25f, 5f);
+                    CreateModel.CreateWall(i, 3f, .25f, 5f);
 
                     if (i == -8 || i == 3)
                         i += 3;
                 }
 
                 // Around LaserStop
-                CreateModel.createWall(-1f, -8.5f, .25f, 2.5f);
-                CreateModel.createWall(1f, -8.5f, .25f, 2.5f);
+                CreateModel.CreateWall(-1f, -8.5f, .25f, 2.5f);
+                CreateModel.CreateWall(1f, -8.5f, .25f, 2.5f);
             }
 
             // Laser start/stop
-            LaserStart laserStart = CreateModel.createLaserStart(-9.3f, 0f, 3);
-            laserStart.rotate(90);
+            LaserStart laserStart = CreateModel.CreateLaserStart(-9.3f, 0f, 3);
+            laserStart.Rotate(90);
             laserWrappers.Add(laserStart);
 
-            LaserStop laserStop = CreateModel.createLaserStop(0f, -9.5f);
-            laserStop.rotate(180);
+            LaserStop laserStop = CreateModel.CreateLaserStop(0f, -9.5f);
+            laserStop.Rotate(180);
 
             // Moveables
             Model model;
             for (int i = 0; i < 6; i++)
             {
-                int x = randomInt(0, 9);
-                int y = randomInt(0, 8);
+                int x = MathExtension.RandomInt(0, 9);
+                int y = MathExtension.RandomInt(0, 8);
 
-                model = CreateModel.createMovableTriangle(x, y, 1f, 1f);
-                randomRotate(model);
+                model = CreateModel.CreateMovableTriangle(x, y, 1f, 1f);
+                RandomRotate(model);
             }
 
-            model = CreateModel.createMovableBox(0f, 7f);
-            model.rotate(25);
+            model = CreateModel.CreateMovableBox(0f, 7f);
+            model.Rotate(25);
 
-            model = CreateModel.createMovableBox(3f, 7f);
-            model.rotate(165);
+            model = CreateModel.CreateMovableBox(3f, 7f);
+            model.Rotate(165);
 
-            model = CreateModel.createMovableBox(6f, 7f);
-            model.rotate(243);
+            model = CreateModel.CreateMovableBox(6f, 7f);
+            model.Rotate(243);
 
             // Unmoveable Models
             float velocity = 0.7f;
@@ -66,52 +69,52 @@ namespace LaserAmazer.level
             movingBoxes = new MovingBox[movingBoxCount];
             for (int i = 0; i < movingBoxCount; i++)
             {
-                velocity = (float)randomInt(0, 1) + 0.5f;
+                velocity = (float)MathExtension.RandomInt(0, 1) + 0.5f;
                 movingBox = new MovingBox(-4f + 2f * i, 0f, 40 + (i * 3), 0f, i % 2 == 0 ? velocity : -velocity);
-                movingBox.rotate(45);
+                movingBox.Rotate(45);
                 movingBoxes[i] = movingBox;
             }
 
-            spinBox = CreateModel.createBox(-4f, -7f, 1.4f);
+            spinBox = CreateModel.CreateBox(-4f, -7f, 1.4f);
 
             Model[] triangles = {
-                CreateModel.createTriangle(-0.88f, -2f, -1f, -1f),
-                CreateModel.createTriangle(0.88f, -3f, -1.3f, -1.3f),
-                CreateModel.createTriangle(-0.88f, -4f, -1f, -1f)
+                CreateModel.CreateTriangle(-0.88f, -2f, -1f, -1f),
+                CreateModel.CreateTriangle(0.88f, -3f, -1.3f, -1.3f),
+                CreateModel.CreateTriangle(-0.88f, -4f, -1f, -1f)
         };
 
             for (int i = 0; i < triangles.Length; i++)
             {
                 if (i % 2 == 0)
                 {
-                    triangles[i].rotate(-45);
+                    triangles[i].Rotate(-45);
                 }
                 else
                 {
-                    triangles[i].rotate(135);
+                    triangles[i].Rotate(135);
                 }
             }
 
-            model = CreateModel.createBox(0f, -6.5f, 1f);
-            model.rotate(65);
+            model = CreateModel.CreateBox(0f, -6.5f, 1f);
+            model.Rotate(65);
 
             isRendered = true;
         }
 
 
-        public override void logicLoop()
+        public override void LogicLoop()
         {
             if (isRendered)
             {
-                base.logicLoop();
+                base.LogicLoop();
 
                 foreach (MovingBox mBox in movingBoxes)
                 {
                     if (mBox != null)
-                        mBox.logicLoop();
+                        mBox.LogicLoop();
                 }
 
-                spinBox.rotate(1);
+                spinBox.Rotate(1);
             }
         }
 

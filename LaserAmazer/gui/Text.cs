@@ -1,4 +1,6 @@
-namespace LaserAmazer.gui
+using LaserAmazer.Render;
+
+namespace LaserAmazer.Gui
 {
     public class Text : UIElement
     {
@@ -59,19 +61,20 @@ namespace LaserAmazer.gui
             this.align = align;
         }
 
-        public new void render()
+        public void Render()
         {
-            label.renderString(label.getRenderString(), xOffset, yOffset, size);
+            label.RenderString(label.getRenderString(), xOffset, yOffset, size);
         }
 
         /**
          * Change the label rendered by the text
          * @param f
          */
-        public void setLabel(GameFont f)
+        public void SetLabel(GameFont f)
         {
-            this.label = f;
+            label = f;
             string str = label.getRenderString();
+
             switch (align)
             {
                 case Alignment.LEFT:
@@ -87,9 +90,10 @@ namespace LaserAmazer.gui
                     break;
             }
         }
-        public void setLabelstring(string str)
+
+        public void SetLabelstring(string str)
         {
-            label.setRenderString(str);
+            label.SetRenderString(str);
         }
 
     }

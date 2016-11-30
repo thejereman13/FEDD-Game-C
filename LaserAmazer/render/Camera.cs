@@ -1,6 +1,6 @@
 using OpenTK;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     /**
      * Enables the in-game view to be  moved around.

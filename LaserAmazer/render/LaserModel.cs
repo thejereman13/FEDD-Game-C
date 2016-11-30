@@ -1,7 +1,7 @@
 using OpenTK;
 using System;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class LaserModel : Model
     {
@@ -28,7 +28,7 @@ namespace LaserAmazer.render
         public LaserModel(float[] tCoords, int[] indices, float x0, float y0, float angle, float length) : base(GetVertices(x0, y0, angle, length, LASER_WIDTH), tCoords, indices, 4, GameTexture.LASER)
         {
             this.angle = angle;
-            this.vect = new Vector2d(length * Math.Cos(angle), length * Math.Sin(angle));
+            this.vect = new Vector2d(length * System.Math.Cos(angle), length * System.Math.Sin(angle));
             coords[0] = x0;
             coords[1] = y0;
 
@@ -66,8 +66,8 @@ namespace LaserAmazer.render
         {
             length += .05f;
 
-            float endX = length * (float)Math.Cos(angle) + begX;
-            float endY = length * (float)Math.Sin(angle) + begY;
+            float endX = length * (float)System.Math.Cos(angle) + begX;
+            float endY = length * (float)System.Math.Sin(angle) + begY;
             float dy = endY - begY;
             float dx = endX - begX;
             float xS = (width * dy / length) / 2;
@@ -88,12 +88,12 @@ namespace LaserAmazer.render
          */
         public float GetAngle()
         {
-            return this.angle;
+            return angle;
         }
 
         private static float FindAngle(Vector2d vec)
         {
-            return (float)Math.Atan2(vec.Y, vec.X);
+            return (float)System.Math.Atan2(vec.Y, vec.X);
         }
 
         /**
@@ -103,7 +103,7 @@ namespace LaserAmazer.render
         public void SetAngle(float a)
         {
             this.angle = a;
-            this.vect = new Vector2d(.1f * Math.Cos(a), .1f * Math.Sin(a));
+            this.vect = new Vector2d(.1f * System.Math.Cos(a), .1f * System.Math.Sin(a));
             DetermineDirection();
         }
 
@@ -113,7 +113,7 @@ namespace LaserAmazer.render
         private void DetermineDirection()
         {
             // Y
-            if (Math.Sin(angle) >= 0)
+            if (System.Math.Sin(angle) >= 0)
             {
                 yDir = 1;
             }
@@ -123,7 +123,7 @@ namespace LaserAmazer.render
             }
 
             // X
-            if (Math.Cos(angle) >= 0)
+            if (System.Math.Cos(angle) >= 0)
             {
                 xDir = 1;
             }
@@ -150,7 +150,7 @@ namespace LaserAmazer.render
          */
         public float[] GetCoords()
         {
-            return this.coords;
+            return coords;
         }
 
         /**
@@ -159,11 +159,11 @@ namespace LaserAmazer.render
          */
         public void SetCoords(float[] f)
         {
-            this.coords = f;
+            coords = f;
         }
 
         /* TODO: Update
-        public new void render() {
+        public new void Render() {
 
             if (!renderGens) {
                 tex = new Texture(texStr);

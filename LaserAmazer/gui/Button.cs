@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System;
+using LaserAmazer.Render;
 
-namespace LaserAmazer.gui
+namespace LaserAmazer.Gui
 {
     public class Button : Model, UIElement, IClickable
     {
@@ -55,7 +56,7 @@ namespace LaserAmazer.gui
             yCoords = new float[] { coords[1], coords[4], coords[7], coords[10] };
         }
 
-        public void addCallback(Action r)
+        public void AddCallback(Action r)
         {
             callbacks.Add(r);
         }
@@ -64,7 +65,7 @@ namespace LaserAmazer.gui
          * Returns a callback runnable previously declared
          * @return
          */
-        public Action getCallback(int index)
+        public Action GetCallback(int index)
         {
             return callbacks[index];
         }
@@ -75,9 +76,9 @@ namespace LaserAmazer.gui
          * @param yPos
          * @return
          */
-        public bool checkClick(float xPos, float yPos)
+        public bool CheckClick(float xPos, float yPos)
         {
-            if (UIUtils.pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos))
+            if (UIUtils.Pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos))
             {
                 if (callbacks != null)
                 {
@@ -95,24 +96,24 @@ namespace LaserAmazer.gui
             }
         }
 
-        public new void render()
+        public new void Render()
         {
-            base.render();
+            base.Render();
             float w = width / (float)label.getRenderString().Length / 3.5f;
             if (.52f * w > .13f * height)
                 w = .13f * height / .52f;
-            label.renderString(label.getRenderString(), xCoords[0] / 10, (yOffset - w * 2.6f) / 20, w);
+            label.RenderString(label.getRenderString(), xCoords[0] / 10, (yOffset - w * 2.6f) / 20, w);
         }
 
-        public new void move(float x, float y, float z)
+        public new void Move(float x, float y, float z)
         {
-            base.move(x, y, z);
+            base.Move(x, y, z);
             yOffset += y; // Manually set the new coordinates after move, needed for font movement
             xCoords = new float[] { base.vertices[0], base.vertices[3], base.vertices[6], base.vertices[9] };
             yCoords = new float[] { base.vertices[1], base.vertices[4], base.vertices[7], base.vertices[10] };
         }
 
-        public void setCallback(Action r) { }
+        public void SetCallback(Action r) { }
 
         /**
          * Change the label rendered by the text

@@ -1,8 +1,10 @@
+using OpenTK.Graphics.ES11;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
     public class Texture
     {
@@ -42,22 +44,22 @@ namespace LaserAmazer.render
 
                 pixels.flip();
 
-                texture = glGenTextures();
-                glBindTexture(GL_TEXTURE_2D, texture);
-                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+                texture = GL.GenTexture();
+                GL.BindTexture(TextureTarget.Texture2D, texture);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) All.Nearest);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) All.Nearest);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelFormat.Rgba, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixels);
             }
-            catch (IOException e)
+            catch (IOException ex)
             {
-                e.printStackTrace();
+                Console.Write(ex.ToString());
             }
         }
 
         protected void Finalize()
         {
-            glDeleteTextures(texture);
-            base.Finalize();
+            GL.DeleteTexture(texture);
+            //base.Finalize();
         }
 
         /**
@@ -68,8 +70,8 @@ namespace LaserAmazer.render
         {
             if (sampler >= 0 && sampler <= 31)
             {
-                glActiveTexture(GL_TEXTURE0 + sampler);
-                glBindTexture(GL_TEXTURE_2D, texture);
+                GL.ActiveTexture(GL_TEXTURE0 + sampler);
+                GL.BindTexture(TextureTarget.Texture2D, texture);
             }
         }
 
@@ -78,7 +80,7 @@ namespace LaserAmazer.render
          */
         public void Unbind()
         {
-            glBindTexture(GL_TEXTURE_2D, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
     }

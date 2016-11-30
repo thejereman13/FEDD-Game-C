@@ -1,4 +1,4 @@
-namespace LaserAmazer.render
+namespace LaserAmazer.Render
 {
 
     public class MovingBox
