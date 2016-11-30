@@ -61,7 +61,7 @@ public class GameInstance {
 	 */
 	private void setup() {
 		SaveGame.readData();
-		new ModLoader();
+	//	new ModLoader();
 		objectManager = new ObjectManager();
 		/*
 		// If glfw fails to initialize, throw exception 
