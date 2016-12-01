@@ -1,4 +1,5 @@
-﻿namespace FEDDGame
+﻿using OpenTK;
+namespace FEDDGame
 {
     partial class Form1
     {

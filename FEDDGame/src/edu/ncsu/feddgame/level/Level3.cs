@@ -17,10 +17,10 @@ public class Level3 : Level {
 		// Unmoveables
 		CreateModel.createBox(-4f, 5f, 1f);
 		
-		laserWrappers.add(CreateModel.createLaserStart(-10f, -1f, 2, (float) Math.toRadians(-45)));
+		laserWrappers.Add(CreateModel.createLaserStart(-10f, -1f, 2, -45));
 		
 		Model laserStop = CreateModel.createLaserStop(-9.7f, 7f);
-		laserStop.rotate((float) Math.toRadians(90));
+		laserStop.rotate(90);
 
 		movingBox = new MovingBox(2.85f, 2.6f, 123, 0f, 1f);
 		

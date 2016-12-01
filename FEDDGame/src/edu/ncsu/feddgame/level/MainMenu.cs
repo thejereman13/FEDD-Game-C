@@ -22,7 +22,7 @@ public class MainMenu : Menu {
 			GameInstance.setLevel(1);
 		}, new GameFont("Options", GameColor.RED)));
 		elementList.Add(CreateUI.createButton(0, -3.5f, 3, 1.25f, () =>{
-			SaveData.writeData();
+			SaveGame.writeData();
             Application.Exit();
 		}, new GameFont("Quit", GameColor.RED)));
 		

@@ -25,7 +25,7 @@ public class ReflectionCalculation {
 			closest = getClosestIntersection(); // Find the closest one
 			
 			// Pythagorean theorem to find length of vector
-			float length = (float) Math.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]); 
+			float length = Hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]); 
 			
 			laser.setLength(length); // Modify the laser to the correct length
 			
@@ -161,10 +161,9 @@ public class ReflectionCalculation {
 		// For all intersecting points
 		foreach (object[] b in intersects) {
 			try {
-				length = (float) Math.Hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
+				length = Hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
 				// If the new object is closer than the old one
-				if ((Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Math
-						.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
+				if ((Hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
 					midpoint[0] = ((float)b[1]+coords[0]) / 2f;
 					midpoint[1] = ((float)b[2]+coords[1]) /2f;
 					// Ensure that the new intersection point isn't at the exact same spot
@@ -231,6 +230,10 @@ public class ReflectionCalculation {
 		if (m is LaserStop) {
 			((LaserStop) m).laserIntersection();
 		}
+	}
+
+	private static float Hypot(float x, float y) {
+		return (float) Math.Sqrt(x * x + y * y);
 	}
 
 }

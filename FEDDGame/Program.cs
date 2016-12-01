@@ -16,9 +16,8 @@ namespace FEDDGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
-            Console.WriteLine("Yo");
-            new FEDDGameLaunch();
+            Application.Run(new Form1());
+           // new FEDDGameLaunch();
         }
     }
 }

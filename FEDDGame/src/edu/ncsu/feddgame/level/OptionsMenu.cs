@@ -25,7 +25,7 @@ public class OptionsMenu : Menu {
 			display = 1;
 		}, new GameFont("Graphics", GameColor.TEAL)));
 		elementList.Add(CreateUI.createButton(0, -6, 6, 1.5f, () =>{
-			SaveData.writeData();
+			SaveGame.writeData();
 			GameInstance.setLevel(0);
 		}, new GameFont("Return to Main Menu", GameColor.TEAL)));
 		

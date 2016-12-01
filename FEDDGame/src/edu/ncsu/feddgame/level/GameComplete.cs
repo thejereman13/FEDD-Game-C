@@ -11,7 +11,7 @@ public class GameComplete : Menu {
 			GameInstance.setLevel(0);
 		}, new GameFont("Main Menu", GameColor.TEAL)));
 		elementList.Add(CreateUI.createButton(0, -4f, 6f, 1.5f, () =>{
-			SaveData.writeData();
+			SaveGame.writeData();
             Application.Exit();
 		}, new GameFont("Quit Game", GameColor.RED)));
 		

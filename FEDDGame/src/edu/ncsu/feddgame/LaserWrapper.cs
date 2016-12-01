@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 public class LaserWrapper {
 	
 	private LinkedList<LaserModel> laserList = new LinkedList<LaserModel>(); // Linked List of all lasers
 	private object[] newL;
-	private readonly ReadWriteLock lock = new ReentrantReadWriteLock(); // ReadWriteLock for synchronizing the access of the list between threads
+	private static readonly ReaderWriterLockSlim l = new ReaderWriterLockSlim(); // ReadWriteLock for synchronizing the access of the list between threads
 	private LaserModel root; // Root node in the laser list
 	
 	/**
@@ -31,40 +33,40 @@ public class LaserWrapper {
 	 * Run everything necessary to generate a path for the lasers
 	 */
 	public void runReflections() {
-		lock.writeLock().lock(); // Lock access to the list
+		l.EnterWriteLock(); // Lock access to the list
 		
 		laserList.Clear(); // Clear and restart the list
 		laserList.AddLast(root);
 		calculateReflections(); // Run reflections
 		
-		lock.writeLock().unlock(); // Unlock access
+		l.ExitWriteLock(); // Unlock access
 	}
 	
 	/**
 	 * Renders all the lasers in the system
 	 */
 	public void render() {
-		lock.readLock().lock(); // Locks access to the list
+		l.EnterReadLock(); // Locks access to the list
 		
 		// Renders all lasers in the list
 		foreach (LaserModel m in laserList){
 			m.render();
 		}
-		lock.readLock().unlock(); // Unlocks the list
+		l.ExitReadLock(); // Unlocks the list
 	}
 	
 	public void rotateStart(float angle, float xOffset, float yOffset) {
 		try {
-			float[] c = laserList.getFirst().getCoords();
+			float[] c = laserList.First.Value.getCoords();
 			float x = c[0] - xOffset, y = c[1] - yOffset;
 			float[] g = new float[] {
-					 (float)(x * Math.cos(angle) - y * Math.sin(angle) + xOffset),
-					 (float)(x * Math.sin(angle) + y * Math.cos(angle) + yOffset)
+					 (float)(x * Math.Cos(angle) - y * Math.Sin(angle) + xOffset),
+					 (float)(x * Math.Sin(angle) + y * Math.Cos(angle) + yOffset)
 			};
-			
-			laserList.getFirst().setCoords(g);
-			float ang = (float)(laserList.getFirst().getAngle() + angle) % ((float)Math.PI * 2f);
-			laserList.getFirst().setAngle(ang);
+
+			laserList.First.Value.setCoords(g);
+			float ang = (float)(laserList.First.Value.getAngle() + angle) % ((float)Math.PI * 2f);
+			laserList.First.Value.setAngle(ang);
 		} catch (Exception e) {}
 	}
 

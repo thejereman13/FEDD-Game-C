@@ -18,7 +18,7 @@ namespace FEDDGame
         }
 
 		private void glControl1_Load(object sender, EventArgs e) {
-			
+			new GameInstance();
 		}
 
 		private void glControl1_KeyPress(object sender, KeyPressEventArgs e) {

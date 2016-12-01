@@ -54,7 +54,7 @@ public class Text : UIElement {
 		this.align = align;
 	}
 	
-	public new void render() {
+	public void render() {
 		label.renderString(label.getRenderString(), xOffset, yOffset, size);
 	}
 	

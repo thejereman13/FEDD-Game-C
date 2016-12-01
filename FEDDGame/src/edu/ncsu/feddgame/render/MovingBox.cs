@@ -1,4 +1,3 @@
-package edu.ncsu.feddgame.render;
 
 public class MovingBox {
 

@@ -124,7 +124,7 @@ public class Model {
 		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 		
 		GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexId);
-		GL.DrawElements(PrimitiveType.Triangles, drawCount, DrawElementsType.UnsignedInt, 0);
+		GL.DrawElements(BeginMode.Triangles, drawCount, DrawElementsType.UnsignedInt, 0);
 		
 		GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 		GL.BindBuffer(BufferTarget.ArrayBuffer, 0);

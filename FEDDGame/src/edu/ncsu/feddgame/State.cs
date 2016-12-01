@@ -1,4 +1,3 @@
-package edu.ncsu.feddgame;
 
 public enum State {
 	GAME,

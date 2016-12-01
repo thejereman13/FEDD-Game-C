@@ -1,3 +1,7 @@
+using OpenTK.Graphics.OpenGL;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 public class Texture {
 	
@@ -8,9 +12,10 @@ public class Texture {
 	 * @param String path
 	 */
 	public Texture(string path) {
-		BufferedImage image;
+		//BufferedImage image;
 
 		try {
+			/*
 			image = ImageIO.read(getClass().getResourceAsStream("/textures/" + path));
 			width = image.getWidth();
 			height = image.getHeight();
@@ -31,20 +36,22 @@ public class Texture {
 			}
 			
 			pixels.flip();
-			
-			texture = glGenTextures();
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-		} catch (IOException e) {
-			e.printStackTrace();
+			*/
+
+			Bitmap bmp = new Bitmap("res/textures/" + path);
+			BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+			texture = GL.GenTexture();
+			GL.BindTexture(TextureTarget.Texture2D, texture);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, bmp_data.Scan0);
+		} catch (Exception e) {
 		}
 	}
 	
-	protected void finalize() throws Throwable {
-		glDeleteTextures(texture);
-		super.finalize();
+	protected void finalize() {
+		GL.DeleteTexture(texture);
 	}
 	
 	/**
@@ -53,8 +60,8 @@ public class Texture {
 	 */
 	public void bind(int sampler) {
 		if (sampler >= 0 && sampler <= 31) {
-			glActiveTexture(GL_TEXTURE0 + sampler);
-			glBindTexture(GL_TEXTURE_2D, texture);
+			GL.ActiveTexture(TextureUnit.Texture0 + sampler);
+			GL.BindTexture(TextureTarget.Texture2D, texture);
 		}
 	}
 	
@@ -62,7 +69,7 @@ public class Texture {
 	 * Removes the texture from LWJGL
 	 */
 	public void unbind() {
-		glBindTexture(GL_TEXTURE_2D, 0);
+		GL.BindTexture(TextureTarget.Texture2D, 0);
 	}
 	
 }
