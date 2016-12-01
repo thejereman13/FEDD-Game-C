@@ -1,4 +1,6 @@
-﻿namespace LaserAmazer
+﻿using OpenTK;
+
+namespace LaserAmazer
 {
     partial class MainForm
     {
@@ -28,7 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.glControl1 = new OpenTK.GLControl();
+            this.glControl1 = new GLControl();
             this.SuspendLayout();
             // 
             // glControl1
