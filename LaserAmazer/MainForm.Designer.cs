@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using System;
 
 namespace LaserAmazer
 {
@@ -19,7 +20,11 @@ namespace LaserAmazer
             {
                 components.Dispose();
             }
-            base.Dispose(disposing);
+			try {
+				base.Dispose(disposing);
+			} catch(Exception e) {
+				Console.WriteLine(e.StackTrace);
+			}
         }
 
         #region Windows Form Designer generated code
@@ -56,6 +61,7 @@ namespace LaserAmazer
 			this.Controls.Add(this.glControl1);
 			this.Name = "MainForm";
 			this.Text = "Laser Amazer";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
 			this.ResumeLayout(false);

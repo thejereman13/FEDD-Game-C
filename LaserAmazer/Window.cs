@@ -18,6 +18,8 @@ namespace LaserAmazer
         public static bool ctrlHeld = false;
         private Text times;
 
+		public static bool closeWindow = false;
+
         private List<UIElement> elementList = new List<UIElement>();
 
         public Window() : this(800, 800, "FEDD Game", false)
@@ -106,8 +108,7 @@ namespace LaserAmazer
          */
         public bool ShouldClose()
         {
-            return false;
-            //return glfwWindowShouldClose(window);
+            return closeWindow;
         }
 
         /**

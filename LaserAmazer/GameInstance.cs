@@ -16,7 +16,7 @@ namespace LaserAmazer
 
         public static Window window;
         public static ObjectManager objectManager;
-
+		public static Thread logicLoop;
         public static bool levelCompleteDialogue = true;
         public static bool showTimer = true;
         public static int samplingLevel = 4;
@@ -110,13 +110,17 @@ namespace LaserAmazer
 
 			SetState(State.GAME); // Set the game state
             SetLevel(0); // Set the starting level
-			Console.WriteLine("Start Logic");
-            new Thread(() => LogicLoop()).Start(); // Run the logic in a separate thread
+
+            logicLoop = new Thread(() => LogicLoop()); // Run the logic in a separate thread
+			logicLoop.Start();
             window.CenterWindow(); // Center window on screen
-                                   // Poll window while window isn't about to close
-            while (!window.ShouldClose())
+
+			return;
+			// Poll window while window isn't about to close
+			while (!window.ShouldClose())
             {
-                canRender = false;
+				
+				canRender = false;
 
                 // Control frames per second
                 {

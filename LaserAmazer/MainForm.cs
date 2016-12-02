@@ -15,6 +15,7 @@ namespace LaserAmazer
 
 		private void glControl1_Load(object sender, EventArgs e) {
 			loaded = true;
+			GL.ClearColor(Color.Bisque);
 			new GameInstance();
 		}
 
@@ -35,6 +36,11 @@ namespace LaserAmazer
 				return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			glControl1.SwapBuffers();
+		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+			Window.closeWindow = true;
+
 		}
 	}
 }
