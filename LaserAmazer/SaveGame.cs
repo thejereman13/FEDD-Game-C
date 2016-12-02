@@ -47,8 +47,9 @@ namespace LaserAmazer
                         }
                     }
                 }
-                catch
+                catch (Exception e)
                 {
+					Console.WriteLine(e.StackTrace);
                 }
             }
             values = new object[] {
@@ -69,18 +70,19 @@ namespace LaserAmazer
             using (StreamReader input = new StreamReader("saveGame.fd"))
             {
                 string s;
-                while ((s = input.ReadLine()) != null)
-                {
-                    if (values[i] is bool)
-                    {
-                        values[i] = bool.Parse(s);
-                        runs[i].Invoke();
-                    }
-                    else if (values[i] is int)
-                    {
-                        values[i] = int.Parse(s);
-                        runs[i].Invoke();
-                    }
+                while ((s = input.ReadLine()) != null){
+					try {
+						if(values[i] is bool) {
+							values[i] = bool.Parse(s);
+							runs[i].Invoke();
+						} else if(values[i] is int) {
+							values[i] = int.Parse(s);
+							runs[i].Invoke();
+						}
+					} catch(Exception e) {
+						Console.WriteLine(e.StackTrace);
+					}
+					i++;
                 }
             }
         }

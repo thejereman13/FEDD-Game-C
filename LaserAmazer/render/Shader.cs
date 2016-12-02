@@ -1,3 +1,4 @@
+using LaserAmazer.Properties;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -17,24 +18,26 @@ namespace LaserAmazer.Render
         public Shader(string path)
         {
             program = GL.CreateProgram();
+			try {
+				// Vertex shader
+				vs = GL.CreateShader(ShaderType.VertexShader);
+				GL.ShaderSource(vs, File.ReadAllText(GameInstance.pathName + "shaders/shader.vs"));
+				GL.CompileShader(vs);
 
-            // Vertex shader
-            vs = GL.CreateShader(ShaderType.VertexShader);
-            GL.ShaderSource(vs, ReadFile(path + ".vs"));
-            GL.CompileShader(vs);
+				/*
+				if (glGetShaderi(vs, GL_COMPILE_STATUS) != 1) {
+					System.err.println(glGetShaderInfoLog(vs)); // Print shader error
+					System.exit(1);
+				}
+				*/
 
-            /*
-            if (glGetShaderi(vs, GL_COMPILE_STATUS) != 1) {
-                System.err.println(glGetShaderInfoLog(vs)); // Print shader error
-                System.exit(1);
-            }
-            */
-
-            // Fragment shader
-            fs = GL.CreateShader(ShaderType.FragmentShader);
-            GL.ShaderSource(fs, ReadFile(path + ".fs"));
-            GL.CompileShader(fs);
-
+				// Fragment shader
+				fs = GL.CreateShader(ShaderType.FragmentShader);
+				GL.ShaderSource(fs, File.ReadAllText(GameInstance.pathName + "shaders/shader.fs"));
+				GL.CompileShader(fs);
+			} catch(Exception e) {
+				Console.WriteLine(e.StackTrace);
+			}
             /* Check for shader error
             if (glGetShaderi(fs, GL_COMPILE_STATUS) != 1) {
                 System.err.println(glGetShaderInfoLog(fs)); // Print shader error
@@ -64,7 +67,7 @@ namespace LaserAmazer.Render
             */
         }
 
-        protected void Finalize()
+        protected void finalize()
         {
             GL.DetachShader(program, vs);
             GL.DetachShader(program, fs);
@@ -96,15 +99,18 @@ namespace LaserAmazer.Render
          */
         private string ReadFile(string path)
         {
+			string sr;
             try
             {
-                using (StreamReader input = new StreamReader("/res/shaders/shader"))
+                using (StreamReader input = new StreamReader(path))
                 {
-                    return input.ReadToEnd();
+                    sr = input.ReadToEnd();
+					Console.WriteLine(sr);
+					return sr;
                 }
             }
-            catch
-            {
+            catch (Exception e){
+				Console.WriteLine(e.StackTrace);
             }
 
             return null;

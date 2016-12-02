@@ -17,7 +17,7 @@ namespace LaserAmazer.Render
             LoadTexture(path);
         }
 
-        protected void Finalize()
+        protected void finalize()
         {
             GL.DeleteTexture(texture);
             //base.Finalize();

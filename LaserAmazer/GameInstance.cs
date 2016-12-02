@@ -12,6 +12,8 @@ namespace LaserAmazer
     public class GameInstance
     {
 
+		public static string pathName = "../../res/";
+
         public static Window window;
         public static ObjectManager objectManager;
 
@@ -59,8 +61,7 @@ namespace LaserAmazer
             }
             finally
             {
-                //glfwTerminate();
-                //System.exit(1);
+               
             }
         }
 
@@ -69,19 +70,9 @@ namespace LaserAmazer
          */
         private void Setup()
         {
-            SaveGame.readData();
+			SaveGame.readData();
             //	new ModLoader();
             objectManager = new ObjectManager();
-            /*
-            // If glfw fails to initialize, throw exception 
-            if (!glfwInit())
-                throw new IllegalStateException("Cannot initialize GLFW");
-
-            glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); 	// Set window resizable and visible (set at defaults right now)
-            glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
-            glfwWindowHint(GLFW_SAMPLES, 4);
-            glfwWindowHint(GLFW_STENCIL_BITS, 4);
-            */
             window = new Window(800, 800, "Laser Amazer", false);
 
             if (demoMode)
@@ -94,7 +85,6 @@ namespace LaserAmazer
          */
         private void RenderLoop()
         {
-            //TODO Should probably throw exception and exit here if window is null
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
@@ -102,31 +92,26 @@ namespace LaserAmazer
 
             FloatColor clearColor = GameColor.DARK_GREY;
             GL.ClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1f);
-
+			
             // Set up main menu text
             GameFont menuItem = new GameFont("Start Game", GameColor.ORANGE);
             GameFont startGame = new GameFont("Press Space to Start Game", GameColor.YELLOW);
-
-            Matrix4d scale = Matrix4d.CreateTranslation(new Vector3d(100, 0, 0));   //Might still need a scale() method
+			Matrix4d scale = Matrix4d.CreateTranslation(new Vector3d(100, 0, 0));   //Might still need a scale() method
             Matrix4d target = new Matrix4d();
-
-            Camera camera = new Camera(window.GetWidth(), window.GetHeight());
+			Camera camera = new Camera(window.GetWidth(), window.GetHeight());
             camera.SetPosition(new Vector3d(-100, 0, 0));
-
-            shader = new Shader("shader");
-
-            double frameCap = 1.0 / 60; // 60 FPS
+			
+			shader = new Shader("shader");
+			double frameCap = 1.0 / 60; // 60 FPS
 
             double frameTime = 0;
             double time = GetTime();
             double unprocessed = 0;
 
-            SetState(State.GAME); // Set the game state
+			SetState(State.GAME); // Set the game state
             SetLevel(0); // Set the starting level
-
+			Console.WriteLine("Start Logic");
             new Thread(() => LogicLoop()).Start(); // Run the logic in a separate thread
-
-            //glfwSetWindowSize(window.window, 1200, 800);
             window.CenterWindow(); // Center window on screen
                                    // Poll window while window isn't about to close
             while (!window.ShouldClose())

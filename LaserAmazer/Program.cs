@@ -13,14 +13,7 @@ namespace LaserAmazer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD:FEDDGame/Program.cs
-            Application.Run(new Form1());
-           // new FEDDGameLaunch();
-=======
             Application.Run(new MainForm());
-            Console.WriteLine("Yo");
-            new LaserAmazerLaunch();
->>>>>>> origin/master:LaserAmazer/Program.cs
         }
     }
 }

@@ -84,7 +84,7 @@ namespace LaserAmazer.Render
             this.texStr = defaultTexString;
         }
 
-        protected void Finalize()
+        protected void finalize()
         {
             GL.DeleteBuffer(vertexId);
             GL.DeleteBuffer(textureId);

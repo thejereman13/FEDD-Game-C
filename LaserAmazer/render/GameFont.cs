@@ -23,8 +23,8 @@ namespace LaserAmazer.Render
             {
                 setUpTextures();
             }
-            catch
-            {
+            catch (Exception e){
+				Console.WriteLine(e.StackTrace);
             }
         }
 
@@ -42,7 +42,7 @@ namespace LaserAmazer.Render
             buffer.flip();
             */
 
-            Bitmap bmp = new Bitmap("res/font.png");
+            Bitmap bmp = new Bitmap(GameInstance.pathName + "font.png");
             BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             // Load the previously loaded texture data into the texture object.
