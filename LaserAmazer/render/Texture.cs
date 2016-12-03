@@ -1,4 +1,5 @@
 using OpenTK.Graphics.ES20;
+using System;
 using System.Drawing;
 
 namespace LaserAmazer.Render
@@ -46,8 +47,8 @@ namespace LaserAmazer.Render
 
         public void LoadTexture(string file)
         {
-            Bitmap bitmap = new Bitmap(file);
 
+			Bitmap bitmap = new Bitmap(GameInstance.pathName + "textures/" + file);
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
 
             GL.GenTextures(1, out texture);

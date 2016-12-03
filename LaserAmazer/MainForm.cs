@@ -8,6 +8,8 @@ namespace LaserAmazer
     public partial class MainForm : Form
     {
 		bool loaded = false;
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -35,6 +37,9 @@ namespace LaserAmazer
 			if(!loaded)
 				return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+			GameInstance.GetCurrentLevel().RenderLoop();
+
 			glControl1.SwapBuffers();
 		}
 

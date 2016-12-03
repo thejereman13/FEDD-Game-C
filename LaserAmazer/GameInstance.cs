@@ -114,7 +114,7 @@ namespace LaserAmazer
             logicLoop = new Thread(() => LogicLoop()); // Run the logic in a separate thread
 			logicLoop.Start();
             window.CenterWindow(); // Center window on screen
-
+			RenderLevel();
 			return;
 			// Poll window while window isn't about to close
 			while (!window.ShouldClose())
