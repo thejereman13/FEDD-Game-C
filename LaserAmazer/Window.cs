@@ -2,10 +2,16 @@ using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 using LaserAmazer.Gui;
 using LaserAmazer.Render;
+using OpenTK;
+using OpenTK.Graphics;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using OpenTK.Input;
 
 namespace LaserAmazer
 {
-    public class Window
+    public class Window : GameWindow
     {
 
         private float mouseX, mouseY;
@@ -24,6 +30,7 @@ namespace LaserAmazer
 
         public Window() : this(800, 800, "FEDD Game", false)
         {
+
         }
 
         /**
@@ -33,21 +40,49 @@ namespace LaserAmazer
          * @param title
          * @param fullscreen
          */
-        public Window(int width, int height, string title, bool fullscreen)
-        {
-            this.width = width;
-            this.height = height;
+        public Window(int width, int height, string title, bool fullscreen) : base(width, height, GraphicsMode.Default, title, (fullscreen) ? GameWindowFlags.Fullscreen : GameWindowFlags.Default){
+			Width = width;
+            Height = height;
             this.ratio = (float)width / (float)height;
-            this.title = title;
+            Title = title;
             this.fullscreen = fullscreen;
             createWindow();
         }
+		/// <summary>
+		/// Runs once on setup
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnLoad(EventArgs e) {
+			base.OnLoad(e);
+			GL.Enable(EnableCap.Texture2D);
+			GL.Enable(EnableCap.Blend);
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-        /**
+		}
+		/// <summary>
+		/// Runs every render frame
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnRenderFrame(FrameEventArgs e) {
+			base.OnRenderFrame(e);
+
+			GameInstance.GetCurrentLevel().RenderLoop();
+			GL.ClearColor(Color.AliceBlue);
+
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+			SwapBuffers();
+		}
+
+		protected override void OnClosing(CancelEventArgs e) {
+			GameInstance.run = false;
+			base.OnClosing(e);
+		}
+
+		/**
          * Creates the window with the parameters
          * of the local variables.
          */
-        private void createWindow()
+		private void createWindow()
         {
             /*
             long monitor = glfwGetPrimaryMonitor();
@@ -86,7 +121,7 @@ namespace LaserAmazer
                 elementList.Add(new Text(10.2f, -1.5f, GameInstance.GetCurrentLevel().getName(), GameColor.YELLOW, 1.4f));
         }
 
-        public void UpdateTime()
+        public void updateTimer()
         {
             if (GameInstance.GetCurrentLevel() is Level.Level)
                 times.SetLabelstring("Time: " + (int)((Level.Level)GameInstance.GetCurrentLevel()).GetElapsedTime());
@@ -112,14 +147,6 @@ namespace LaserAmazer
         }
 
         /**
-         * Swaps the front and back buffers of the window
-         */
-        public void SwapBuffers()
-        {
-            //glfwSwapBuffers(window);
-        }
-
-        /**
          * Sets the error callback for the game
          */
         public static void SetCallbacks()
@@ -127,11 +154,31 @@ namespace LaserAmazer
             //glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
         }
 
-        /**
+		/*
+		 * New Methods
+		*/
+		protected override void OnKeyPress(KeyPressEventArgs e) {
+			base.OnKeyPress(e);
+		}
+		protected override void OnMouseMove(MouseMoveEventArgs e) {
+			base.OnMouseMove(e);
+		}
+		protected override void OnMouseDown(MouseButtonEventArgs e) {
+			base.OnMouseDown(e);
+		}
+		protected override void OnMouseUp(MouseButtonEventArgs e) {
+			base.OnMouseUp(e);
+		}
+		protected override void OnResize(EventArgs e) {
+			base.OnResize(e);
+		}
+
+
+		/**
          * Sets the key callback to be checked
          * when glfwPollEvents is called
          */
-        private void SetKeyCallback()
+		private void SetKeyCallback()
         {
             /*
             // Set key listener

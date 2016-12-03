@@ -1,4 +1,4 @@
-using OpenTK.Graphics.ES20;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Drawing;
 
@@ -57,8 +57,8 @@ namespace LaserAmazer.Render
             System.Drawing.Imaging.BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            GL.TexImage2D((All)TextureTarget.Texture2D, 0, (All)PixelInternalFormat.Rgba, data.Width, data.Height, 0,
-                (All)OpenTK.Graphics.OpenGL.PixelFormat.Bgra, (All)PixelType.UnsignedByte, data.Scan0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+                PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             bitmap.UnlockBits(data);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);

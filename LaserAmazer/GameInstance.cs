@@ -14,6 +14,7 @@ namespace LaserAmazer
 
 		public static string pathName = "../../res/";
 
+		public static bool run = true;
         public static Window window;
         public static ObjectManager objectManager;
 		public static Thread logicLoop;
@@ -65,17 +66,18 @@ namespace LaserAmazer
             }
         }
 
-        /**
+		/**
          * Setup all the window settings
          */
-        private void Setup()
-        {
+		private void Setup() {
 			SaveGame.readData();
-            //	new ModLoader();
-            objectManager = new ObjectManager();
-            window = new Window(800, 800, "Laser Amazer", false);
+			//	new ModLoader();
+			objectManager = new ObjectManager();
 
-            if (demoMode)
+			using(window = new Window(800, 800, "Laser Amazer", false)) {
+				window.Run(60);
+			}
+			if (demoMode)
                 scenes.Add(new DemoLevel());
             scenes.Add(new GameComplete());
         }
@@ -85,10 +87,7 @@ namespace LaserAmazer
          */
         private void RenderLoop()
         {
-
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            
 
             FloatColor clearColor = GameColor.DARK_GREY;
             GL.ClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1f);
@@ -117,7 +116,7 @@ namespace LaserAmazer
 			RenderLevel();
 			return;
 			// Poll window while window isn't about to close
-			while (!window.ShouldClose())
+			while (run)
             {
 				
 				canRender = false;
@@ -156,7 +155,7 @@ namespace LaserAmazer
                         shader.Bind();
                         shader.UpdateUniforms(camera, target);
                         objectManager.RenderAll();
-                        window.UpdateTime();
+                        window.updateTimer();
                         window.RenderElements();
                         GetCurrentLevel().RenderLoop();
                     }
@@ -228,8 +227,7 @@ namespace LaserAmazer
             Thread.CurrentThread.Name = "Logic";
             int timing = (int)System.Math.Round(1f / 60 * 1000f);  // Get the number of milliseconds between frames based on 60 times a second
 
-            while (!window.ShouldClose())
-            {
+            while (run) {
                 if (!gameState) continue;
 
                 double timeNow = GetTime(); // Get time at the start of the loop
